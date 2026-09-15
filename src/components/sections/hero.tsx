@@ -39,8 +39,15 @@ export function Hero() {
         </div>
 
         <div className="relative min-h-[500px] w-full md:w-[55%]">
-          <div className="hero-gradient-card absolute inset-0" />
-        </div>
+  <div className="hero-gradient-card absolute inset-0" />
+
+  <Image
+    src="/images/sua-foto.png"
+    alt=""
+    fill
+    className="object-cover"
+  />
+</div>
 
       </div>
     </section>

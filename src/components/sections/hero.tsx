@@ -1,14 +1,14 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full">
       <div className="flex w-full flex-col md:flex-row">
 
         {/* ESQUERDA */}
-        <div className="flex w-full items-center px-6 py-20 md:w-[60%] md:px-12 md:py-28 lg:px-20">
-          <div className="w-full">
-
+        <div className="flex w-full items-center justify-center px-6 py-20 md:w-[70%] md:px-12 md:py-28 lg:px-20">
+          <div className="w-full max-w-4xl">
             <p className="text-sm font-medium text-flare">
               Recrutamento sem enrolação
             </p>
@@ -38,16 +38,18 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative min-h-[500px] w-full md:w-[55%]">
-  <div className="hero-gradient-card absolute inset-0" />
+        <div className="relative min-h-[500px] w-full overflow-visible md:w-[30%]">
+          <div className="hero-gradient-card absolute inset-0" />
 
-  <Image
-    src="/images/sua-foto.png"
-    alt=""
-    fill
-    className="object-cover"
-  />
-</div>
+          <Image
+            src="/imagens/image-app-pc-hero.png"
+            alt=""
+            width={900}
+            height={600}
+            className="hero-section-image-pc-mobile"
+            priority
+          />
+        </div>
 
       </div>
     </section>

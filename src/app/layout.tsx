@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { SvgFilters } from "@/components/ui/svg-filters";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className="h-full antialiased">
-      <body className={`${poppins.className} min-h-full flex flex-col bg-ink text-paper`}>
+      <body className={`${poppins.className} min-h-full flex flex-col bg-ink text-paper overflow-x-hidden`}>
+        <SvgFilters />
         {children}
       </body>
     </html>

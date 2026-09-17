@@ -4,6 +4,7 @@ import { HowItWorks } from "@/components/sections/how-it-works";
 import { Audiences } from "@/components/sections/audiences";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Footer } from "@/components/sections/footer";
+import { HowItWorksCombined } from "@/components/sections/use-the-system";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <HowItWorks />
+        <HowItWorksCombined />
         <Audiences />
         <FinalCta />
       </main>

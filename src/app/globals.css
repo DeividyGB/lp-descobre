@@ -19,6 +19,19 @@
 
   --gradient-orange-card: linear-gradient(135deg, #B72500 0%, #ED4F00 45%, #FA8E12 100%);
   --gradient-icon-badge: linear-gradient(135deg, #C83A05 0%, #F1750F 100%);
+
+  --cta-conhecer-left: 15%;
+  --cta-conhecer-bottom: 40%;
+  --cta-vaga-left: 68%;
+  --cta-vaga-bottom: 22%;
+
+  --cta-font-size: clamp(0.8rem, 3.6cqw, 1.875rem);
+  --cta-padding-y: clamp(0.30rem, 1cqw, 1.3rem);
+  --cta-padding-x: clamp(0.9rem, 2.6cqw, 2rem);
+
+  /* Ícone flutuante sobre o mockup mobile */
+  --bg-mobile-icon-right: clamp(1.5rem, 7cqw, 125px);
+  --bg-mobile-icon-width: clamp(140px, 34cqw, 600px);
 }
 
 @theme inline {
@@ -50,6 +63,8 @@ body {
   color: var(--color-paper);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* segurança: margens negativas + rings não geram scroll lateral */
 }
 
 ::selection {
@@ -158,6 +173,43 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-glass-white {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all 0.25s ease;
+
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 24px rgba(255, 255, 255, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-glass-white::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backdrop-filter: url(#glass-distortion) blur(4px);
+  -webkit-backdrop-filter: url(#glass-distortion) blur(4px);
+  z-index: -1;
+}
+
+.btn-glass-white:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.7),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.15),
+    inset 0 0 28px rgba(255, 255, 255, 0.12),
+    0 8px 28px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
 .hero-gradient-card {
   background: linear-gradient(135deg,
       #B72500 15%,
@@ -260,6 +312,13 @@ body {
 .button-encontrar-gente {
   background: var(--gradient-orange-card);
   font-size: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.button-encontrar-gente:hover {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.08);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes mockup-float {
@@ -275,6 +334,8 @@ body {
 }
 
 .mockup-wrapper {
+  position: relative;
+  z-index: 1;
   animation: mockup-float 5s ease-in-out infinite;
   transition: transform 0.4s ease;
 }
@@ -369,19 +430,58 @@ body {
   }
 }
 
-.button-encontrar-gente {
-  background: var(--gradient-orange-card);
-  font-size: 20px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+/* ── Foto final (man-woman-working) + CTAs flutuantes ───────────────────
+   container-type habilita as unidades "cqw" abaixo, que são % da LARGURA
+   deste wrapper (não da viewport). É isso que faz o texto e o padding dos
+   botões encolherem proporcionalmente em telas pequenas, sem overflow. */
+.hero-photo-wrap {
+  position: relative;
+  container-type: inline-size;
+  container-name: hero-photo;
 }
 
-.button-encontrar-gente:hover {
-  transform: translateY(-3px) scale(1.03);
-  filter: brightness(1.08);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+.cta-conhecer,
+.cta-vaga {
+  position: absolute;
+  font-size: var(--cta-font-size);
+  padding-block: var(--cta-padding-y);
+  padding-inline: var(--cta-padding-x);
+  white-space: nowrap;
+}
+
+.cta-conhecer {
+  left: var(--cta-conhecer-left);
+  bottom: var(--cta-conhecer-bottom);
+}
+
+.cta-vaga {
+  left: var(--cta-vaga-left);
+  bottom: var(--cta-vaga-bottom);
+}
+
+@container hero-photo (max-width: 420px) {
+
+  .cta-conhecer,
+  .cta-vaga {
+    font-size: var(--cta-font-size);
+    padding-block: var(--cta-padding-y);
+    padding-inline: var(--cta-padding-x);
+  }
 }
 
 .background-mobile-icon {
   position: absolute;
-  right: 110px;
+  top: 50%;
+  left: 50%;
+  max-width: none !important;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #DC4D00, #FA8E12);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }

@@ -18,18 +18,18 @@ import Image from "next/image";
 export function HowItWorksCombined() {
     return (
         <section>
-            <div className="relative overflow-hidden rounded-[32px] bg-orange-card px-8 py-16 md:px-16 md:py-24">
-
+            <div className="relative overflow-hidden rounded-[32px] bg-orange-card px-5 sm:px-8 md:px-16 pt-16 pb-16">
+                
                 <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div className="decor-ring absolute -left-32 top-[15%] h-[440px] w-[440px]" />
                     <div className="decor-ring absolute -right-32 bottom-[8%] h-[440px] w-[440px]" />
                 </div>
 
-                <div className="relative flex flex-col gap-24 md:gap-32">
+                <div className="relative flex flex-col gap-20 md:gap-34">
 
-                    <div className="grid gap-20 md:grid-cols-2 md:items-center">
+                    <div className="grid md:grid-cols-2 md:items-center">
 
-                        <div className="relative flex justify-center pb-6 md:justify-start">
+                        <div className="relative flex justify-center pb-6 md:justify-start ml-10">
                             <div className="mockup-wrapper relative w-full">
 
                                 <div className="mockup-backing absolute -left-5 -top-5 h-full w-full rounded-[24px] bg-ink/70" />
@@ -129,11 +129,11 @@ export function HowItWorksCombined() {
 
                         <div className="flex flex-col items-center gap-6 md:items-center">
                             <div className="relative flex justify-center pt-8">
-                                <span className="absolute left-1/2 z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
-                                    <Building2 className="h-8 w-8 text-white" />
+                                <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
+                                    <Building2 className="h-12 w-12 text-white" />
                                 </span>
-                                <div className="w-full max-w-md rounded-[24px] px-8 pb-6 pt-10 text-center card-contratar">
-                                    <p className="text-4xl leading-tight text-paper">
+                                <div className="w-full max-w-md rounded-[24px] px-8 pb-12 pt-16 text-center card-contratar sm:px-14">
+                                    <p className="text-[26px] leading-tight text-paper sm:text-[30px] md:text-[36px]">
                                         <span className="block">Para quem</span>
                                         <span className="block">precisa <span className="font-extrabold">contratar</span>.</span>
                                     </p>
@@ -148,15 +148,15 @@ export function HowItWorksCombined() {
                         </div>
                     </div>
 
-                    <div className="grid gap-20 md:grid-cols-2 md:items-center">
+                    <div className="grid gap-14 md:grid-cols-2 md:items-center md:gap-20">
 
                         <div className="order-2 flex flex-col items-center gap-6 md:order-1 md:items-center">
                             <div className="relative flex justify-center pt-8">
-                                <span className="absolute left-1/2 z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
-                                    <UserCircle2 className="h-8 w-8 text-white" />
+                                <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
+                                    <UserCircle2 className="h-12 w-12 text-white" />
                                 </span>
-                                <div className="w-full max-w-md rounded-[24px] px-8 pb-6 pt-10 text-center card-contratar">
-                                    <p className="text-4xl leading-tight text-paper">
+                                <div className="w-full max-w-md rounded-[24px] px-8 pb-12 pt-16 text-center card-contratar sm:px-14">
+                                    <p className="text-[26px] leading-tight text-paper sm:text-[30px] md:text-[36px]">
                                         <span className="block">Para quem</span>
                                         <span className="block">procura <span className="font-extrabold">trabalho</span>.</span>
                                     </p>
@@ -171,20 +171,19 @@ export function HowItWorksCombined() {
                         </div>
 
                         <div className="order-1 relative flex justify-center pb-10 md:order-2">
-                            <div className="">
-                                <div className="">
-                                    <Image
-                                        src="/imagens/background-mobile.png"
-                                        alt=""
-                                        width={600}
-                                        height={600}
-                                        className="background-mobile-icon"
-                                        priority
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="mockup-wrapper relative w-full max-w-[340px]">
+                            <Image
+                                src="/imagens/background-mobile.png"
+                                alt=""
+                                width={600}
+                                height={500}
+                                className="background-mobile-icon"
+                                // style={{ width: 450, height: 450, maxWidth: "none" }}
+                                priority
+                            />
+
+                            <div className="mockup-wrapper relative z-10 w-full max-w-[340px]">
+
                                 <div className="mockup-backing absolute -right-4 -top-4 h-full w-full rounded-[46px] bg-ink/70" />
 
                                 <div className="relative rounded-[46px] bg-ink p-3 shadow-2xl">
@@ -198,6 +197,7 @@ export function HowItWorksCombined() {
 
                                         <div className="flex items-center justify-between bg-white px-6 pb-2 pt-3 text-[11px] font-semibold text-ink">
                                             <span>16:04</span>
+
                                             <div className="flex items-center gap-1">
                                                 <CellSignalFull size={13} weight="fill" />
                                                 <WifiHigh size={13} weight="fill" />
@@ -207,7 +207,9 @@ export function HowItWorksCombined() {
 
                                         <div className="bg-flare px-5 py-5 text-white">
                                             <p className="text-base font-semibold">Candidaturas</p>
-                                            <p className="text-[11px] text-white/80">Acompanhe o status das suas vagas</p>
+                                            <p className="text-[11px] text-white/80">
+                                                Acompanhe o status das suas vagas
+                                            </p>
                                         </div>
 
                                         <div className="-mt-4 mx-4 grid grid-cols-4 gap-1 rounded-2xl bg-white p-3 text-center shadow-md">
@@ -218,15 +220,22 @@ export function HowItWorksCombined() {
                                         </div>
 
                                         <div className="flex items-center gap-1.5 overflow-x-auto px-5 py-3 text-[10px] font-medium text-paper-dim">
-                                            <span className="whitespace-nowrap rounded-full bg-flare px-3 py-1.5 text-white">Todas</span>
-                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">Em análise</span>
-                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">Entrevista</span>
+                                            <span className="whitespace-nowrap rounded-full bg-flare px-3 py-1.5 text-white">
+                                                Todas
+                                            </span>
+                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">
+                                                Em análise
+                                            </span>
+                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">
+                                                Entrevista
+                                            </span>
                                             <FunnelSimple size={16} className="ml-auto shrink-0 text-paper-dim" />
                                         </div>
 
                                         <div className="space-y-2.5 px-5 pb-50">
                                             <p className="text-xs font-semibold text-ink">
-                                                Todas as candidaturas <span className="font-normal text-paper-dim">(2 vagas)</span>
+                                                Todas as candidaturas{" "}
+                                                <span className="font-normal text-paper-dim">(2 vagas)</span>
                                             </p>
 
                                             <CandidacyItem
@@ -236,6 +245,7 @@ export function HowItWorksCombined() {
                                                 subtitle="D'Escobre App LTDA"
                                                 status="Enviada"
                                             />
+
                                             <CandidacyItem
                                                 color="bg-[linear-gradient(135deg,#8b5cf6,#6d28d9)]"
                                                 initials="GC"
@@ -253,7 +263,6 @@ export function HowItWorksCombined() {
 
                                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
                                     <button className="button-encontrar-gente flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm shadow-lg">
-                                        <MagnifyingGlassPlus size={16} weight="bold" />
                                         Quero <span className="font-extrabold">uma oportunidade</span>
                                     </button>
                                 </div>
@@ -261,14 +270,41 @@ export function HowItWorksCombined() {
                         </div>
                     </div>
                 </div>
-                <Image
-                    src="/imagens/man-woman-working.png"
-                    alt=""
-                    width={600}
-                    height={600}
-                    className=""
-                    priority
-                />
+
+                <div className="hero-photo-wrap relative -mx-5 py-4 sm:-mx-8 md:-mx-16">
+                    <Image
+                        src="/imagens/man-woman-working.jpeg"
+                        alt=""
+                        width={2000}
+                        height={1000}
+                        className="object-cover w-full h-auto"
+                        priority
+                    />
+
+                    <button className="btn-glass-white cta-conhecer flex items-center gap-2 rounded-full shadow-lg">
+                        Quero <span className="font-extrabold"><span className="text-gradient font-extrabold">conhecer</span></span>
+                    </button>
+
+                    <button className="btn-glass-white cta-vaga flex items-center gap-2 rounded-full shadow-lg">
+                        Quero uma <span className="text-gradient font-extrabold">vaga</span>
+                    </button>
+                </div>
+
+                <div className="mt-12 mb-6 flex justify-center text-center">
+                    <p className="text-3xl leading-tight text-paper sm:text-4xl md:text-5xl lg:text-6xl">
+                        <span className="block">É para essa conexão que</span>
+                        <span className="flex flex-wrap items-center justify-center gap-2">
+                            o
+                            <Image
+                                src="/icones/DESCOBRE-ICON.svg"
+                                alt=""
+                                width={350}
+                                height={350}
+                            />
+                            <span className="font-extrabold">existe!</span>
+                        </span>
+                    </p>
+                </div>
             </div>
         </section>
     );

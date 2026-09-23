@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useAppDownloadModal } from "@/components/app-download-modal-context";
 
 export function Hero() {
+  const { open } = useAppDownloadModal();
+
   return (
     <section className="relative w-full">
       <div className="flex w-full flex-col md:flex-row">
@@ -26,7 +31,7 @@ export function Hero() {
             </p>
 
             <div className="mt-12 flex animate-[hero-fade-up_0.8s_ease-out_0.55s_both] flex-col gap-4 sm:flex-row">
-              <Button size="lg" className="btn-candidate gap-0">
+              <Button size="lg" className="btn-candidate gap-0" onClick={open}>
                 Sou<span className="ml-1 font-extrabold">CANDIDATO</span>
               </Button>
 
@@ -37,7 +42,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative min-h-[560px] w-full overflow-visible sm:min-h-[640px] md:w-[30%] lg:min-h-[760px] xl:min-h-[840px]">
+        <div className="hero-mockup-wrap relative w-full overflow-visible md:w-[30%]">
           <div className="hero-gradient-card absolute inset-0 animate-[hero-slide-in-right_0.9s_ease-out_0.2s_both]" />
 
           <Image

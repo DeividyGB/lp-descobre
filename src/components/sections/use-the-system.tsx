@@ -17,7 +17,7 @@ import Image from "next/image";
 
 export function HowItWorksCombined() {
     return (
-        <section>
+        <section id="como-funciona">
             <div className="relative overflow-hidden rounded-t-[32px] bg-orange-card px-5 pt-16 pb-16 sm:px-8 md:px-16">
                 
                 <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">

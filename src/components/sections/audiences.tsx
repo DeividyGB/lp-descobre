@@ -10,7 +10,7 @@ export function Audiences() {
     const isCandidato = audience === "candidato";
 
     return (
-        <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 sm:-mt-12 sm:pt-20">
+        <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 sm:-mt-12 sm:pt-20" id="empresas">
             <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 md:flex-row md:items-center md:justify-center md:gap-6">
                 <div
                     key={`hero-${audience}`}

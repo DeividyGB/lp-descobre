@@ -22,11 +22,11 @@ export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <Image
-        src="/icones/DESCOBRE-ICON.png"
+        src="/icones/DESCOBRE-ICON.svg"
         alt="Descobre"
-        width={64}
-        height={64}
-        className="h-20 w-20 object-contain"
+        width={180}
+        height={180}
+        className="object-contain"
       />
     </span>
   );

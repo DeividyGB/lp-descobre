@@ -17,7 +17,7 @@
 
   --gradient-flare: linear-gradient(90deg, #DC4D00 0%, #FA8E12 100%);
 
-  --gradient-orange-card: linear-gradient(135deg, #B72500 0%, #ED4F00 45%, #FA8E12 100%);
+  --gradient-orange-card: linear-gradient(135deg, #FA8E12, #DC4D00);
   --gradient-icon-badge: linear-gradient(135deg, #C83A05 0%, #F1750F 100%);
 
   --cta-conhecer-left: 15%;
@@ -32,7 +32,7 @@
   /* Ícone flutuante sobre o mockup mobile */
   --bg-mobile-icon-right: clamp(1.5rem, 7cqw, 125px);
   --bg-mobile-icon-width: clamp(140px, 34cqw, 600px);
-  --gradient-orange-card-invert: linear-gradient(135deg, #FA8E12 0%, #ED4F00 55%, #B72500 100%);
+  --gradient-orange-card-invert: linear-gradient(135deg, #FA8E12, #DC4D00);
 
 }
 
@@ -488,64 +488,113 @@ body {
   color: transparent;
 }
 
-/* ── Card do mockup (hero) — responsivo via container query ─────────── */
-.audience-hero-card {
+.audience-hero-wrap {
   container-type: inline-size;
-  padding-inline: clamp(1.5rem, 7cqw, 4rem);
-  padding-block: clamp(2.5rem, 9cqw, 4.5rem);
+}
+
+.audience-hero-glow {
+  z-index: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  width: clamp(510px, 250cqw, 950px) !important;
+  max-width: none !important;
+  height: clamp(600px, 250cqw, 1100px) !important;
+}
+
+/* garante que o card fica visualmente por cima do glow novo */
+.audience-hero-card {
+  z-index: 10;
+  container-type: inline-size;
+  overflow: hidden;
+  padding-top: clamp(2.5rem, 9cqw, 4.5rem);
 }
 
 .audience-headline {
-  font-size: clamp(1.5rem, 6.5cqw, 2.75rem);
+      padding-inline: clamp(1.5rem, 7cqw, 4rem);
+    padding-bottom: clamp(2.5rem, 11cqw, 5rem);
+    font-size: clamp(1.5rem, 6cqw, 2.75rem);
 }
 
 .audience-mockup-wrap {
   container-type: inline-size;
-  padding-block: clamp(1rem, 5cqw, 2.5rem);
+  width: 100%;
+  /* sem padding-inline: o glow e o celular vão até a borda do card */
 }
 
 .audience-mockup-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(300px, 90cqw, 620px) !important;
-  height: clamp(300px, 90cqw, 620px) !important;
-  max-width: none !important;
-  transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  width: clamp(280px, 100cqw, 560px) !important;
+  max-width: none !important;
+  height: clamp(280px, 85cqw, 560px) !important;
+}
+
+.audience-mockup-glow--wide {
+  pointer-events: none;
+  position: absolute;
+  bottom: -15%;
+  left: 0%;
+
 }
 
 .audience-mockup-phone {
   position: relative;
   z-index: 10;
   height: auto;
-  filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.45));
+  transform: translateY(8%);
+  filter: drop-shadow(0 -10px 30px rgba(0, 0, 0, 0.25));
 }
 
 .audience-mockup-phone--mobile {
-  width: clamp(220px, 62cqw, 380px);
+  width: clamp(240px, 90cqw, 400px);
 }
 
 .audience-mockup-phone--wide {
-  width: clamp(280px, 96cqw, 580px);
+  width: clamp(280px, 100cqw, 580px);
 }
 
-/* ── Card secundário com efeito Glass (Refraction 80 / Depth 20 /
-   Dispersion 50 / Frost 4 / Light -45° 80%, replicando o painel do Figma) */
+.audience-secondary-wrap {
+  width: 100%;
+  margin-top: -15rem;
+  container-type: inline-size;
+}
+
+.audience-secondary-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.audience-secondary-cta {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.75rem, 6cqw, 2rem);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: clamp(0.85rem, 3.5cqw, 1.1rem);
+  padding-block: clamp(0.6rem, 2cqw, 0.9rem);
+  padding-inline: clamp(1.25rem, 4cqw, 1.9rem);
+}
+
 .card-glass {
   container-type: inline-size;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(217, 217, 217, 0.3);
+  background: rgba(217, 217, 217, 0.1);
   backdrop-filter: blur(18px) saturate(150%);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   box-shadow:
-    inset 1px 1px 1px rgba(255, 255, 255, 0.45),
-    inset -1px -1px 1px rgba(0, 0, 0, 0.3),
-    inset 0 0 32px rgba(255, 255, 255, 0.05),
-    0 20px 50px rgba(0, 0, 0, 0.35);
+    inset 1px 1px 1px rgba(217, 217, 217, 0.35),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.35),
+    inset 0 0 32px rgba(217, 217, 217, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .card-glass::before {
@@ -558,7 +607,6 @@ body {
   z-index: -1;
 }
 
-/* Reflexo especular simulando "Light: -45°, 80%" do Figma */
 .card-glass::after {
   content: "";
   position: absolute;
@@ -566,26 +614,30 @@ body {
   left: -15%;
   width: 65%;
   height: 65%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 70%);
+  background: radial-gradient(circle, rgba(217, 217, 217, 0.25), transparent 70%);
   transform: rotate(-45deg);
   pointer-events: none;
 }
 
+/* ── Tamanho do card — mais compacto e próximo do quadrado ───────────── */
 .audience-switch-card {
-  padding: clamp(2.5rem, 11cqw, 5.5rem);
+  width: 100%;
+  aspect-ratio: 1 / 0.9;
+  padding: clamp(1.75rem, 8cqw, 2.75rem);
 }
 
 .audience-switch-title {
-  font-size: clamp(1.75rem, 9cqw, 3.25rem);
+  font-size: clamp(3rem, 8cqw, 2.25rem);
 }
 
 .audience-switch-btn {
-  font-size: clamp(1rem, 4cqw, 1.3rem);
-  padding-block: clamp(0.75rem, 2.5cqw, 1.15rem);
-  padding-inline: clamp(1.5rem, 4.5cqw, 2.1rem);
+  white-space: nowrap;
+  font-size: clamp(1.3rem, 3.2cqw, 1rem);
+  padding-block: clamp(0.65rem, 2.2cqw, 0.95rem);
+  padding-inline: clamp(1.25rem, 4cqw, 1.75rem);
 }
 
-/* ── Switch candidato/empresa — maior e com labels ──────────────────── */
+/* ── Switch candidato/empresa — thumb em formato de cápsula (estilo iOS) ── */
 .audience-switch-wrap {
   display: flex;
   flex-direction: column;
@@ -601,7 +653,7 @@ body {
 }
 
 .audience-switch-label {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--color-paper-dim);
   transition: color 0.25s ease;
@@ -613,44 +665,46 @@ body {
 
 .audience-switch-track {
   position: relative;
-  width: 88px;
-  height: 46px;
+  width: 108px;
+  height: 52px;
   border-radius: 9999px;
   padding: 5px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, #232320 0%, #171714 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    inset 0 2px 5px rgba(0, 0, 0, 0.4),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.06);
+    inset 0 3px 6px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.05);
   transition: border-color 0.25s ease;
 }
 
 .audience-switch-track:hover {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .audience-switch-thumb {
   position: relative;
   display: block;
-  width: 34px;
-  height: 34px;
+  width: 55px;
+  height: 42px;
   border-radius: 9999px;
-  background: linear-gradient(135deg, #FA8E12 0%, #DC4D00 100%);
+  background: linear-gradient(180deg, #FF8A2B 0%, #E85A00 100%);
   box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.4),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+    0 6px 16px rgba(232, 90, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.2);
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.audience-switch-thumb::after {
-  content: "";
-  position: absolute;
-  top: 4px;
-  left: 6px;
-  width: 11px;
-  height: 6px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.65);
-  filter: blur(1px);
+@keyframes reviews-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.reviews-track {
+  animation: reviews-marquee 34s linear infinite;
+}
+
+.reviews-track.is-paused {
+  animation-play-state: paused;
 }

@@ -10,12 +10,11 @@ export function Audiences() {
     const isCandidato = audience === "candidato";
 
     return (
-        <section className="border-b border-hairline/60 bg-ink">
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 py-20 md:flex-row md:items-center md:justify-center md:gap-6">
-
+        <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 sm:-mt-12 sm:pt-20">
+            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 md:flex-row md:items-center md:justify-center md:gap-6">
                 <div
                     key={`hero-${audience}`}
-                    className={`w-full max-w-3xl animate-hero-fade-up ${isCandidato ? "md:order-1" : "md:order-3"
+                    className={`w-full min-w-[500px] animate-hero-fade-up ${isCandidato ? "md:order-1" : "md:order-3"
                         }`}
                 >
                     {isCandidato ? (
@@ -28,8 +27,8 @@ export function Audiences() {
                                 </>
                             }
                             mockupSrc="/imagens/mockup-mobile-audiencia.png"
-                            mockupWidth={260}
-                            mockupHeight={520}
+                            mockupWidth={450}
+                            mockupHeight={450}
                         />
                     ) : (
                         <HeroCard
@@ -40,10 +39,11 @@ export function Audiences() {
                                     <span className="font-extrabold italic">dados e conexões reais</span>.
                                 </>
                             }
-                            mockupSrc="/imagens/mockup-empresa-dashboard.png"
-                            mockupWidth={420}
-                            mockupHeight={340}
+                            mockupSrc="/imagens/mockup-pc-audiencia.png"
+                            mockupWidth={500}
+                            mockupHeight={500}
                             wide
+                            secondaryImageSrc="/imagens/print-sistema-mockup.png"
                         />
                     )}
                 </div>
@@ -54,17 +54,15 @@ export function Audiences() {
 
                 <div
                     key={`switch-card-${audience}`}
-                    className={`w-full max-w-lg  animate-hero-fade-up ${isCandidato ? "md:order-3" : "md:order-1"
+                    className={`w-full max-w-lg min-w-[450px] animate-hero-fade-up ${isCandidato ? "md:order-3" : "md:order-1"
                         }`}
                 >
                     {isCandidato ? (
                         <SwitchCard
                             title={
                                 <>
-                                    Quero{" "}
-                                    <span className="text-gradient font-extrabold">
-                                        contratar.
-                                    </span>
+                                    <span className="block">Quero</span>
+                                    <span className="block text-gradient font-extrabold">contratar.</span>
                                 </>
                             }
                             buttonLabel={
@@ -78,10 +76,8 @@ export function Audiences() {
                         <SwitchCard
                             title={
                                 <>
-                                    Quero{" "}
-                                    <span className="text-gradient font-extrabold">
-                                        trabalhar.
-                                    </span>
+                                    <span className="block">Quero</span>
+                                    <span className="block text-gradient font-extrabold">trabalhar.</span>
                                 </>
                             }
                             buttonLabel={
@@ -104,37 +100,63 @@ function HeroCard({
     mockupWidth,
     mockupHeight,
     wide = false,
+    secondaryImageSrc,
 }: {
     headline: React.ReactNode;
     mockupSrc: string;
     mockupWidth: number;
     mockupHeight: number;
     wide?: boolean;
+    secondaryImageSrc?: string;
 }) {
     return (
-        <div className="audience-hero-card bg-orange-card-invert flex flex-col items-center gap-8 rounded-[32px] text-center">
-            <p className="audience-headline leading-snug text-white">
-                {headline}
-            </p>
+        <div className="audience-hero-wrap relative">
+            <Image
+                src="/imagens/glow-mockup-audiencia.png"
+                alt=""
+                width={900}
+                height={900}
+                className="audience-hero-glow"
+                aria-hidden
+            />
 
-            <div className="audience-mockup-wrap relative flex w-full justify-center">
-                <Image
-                    src="/imagens/background-mobile.png"
-                    alt=""
-                    width={450}
-                    height={450}
-                    className="audience-mockup-glow"
-                    aria-hidden
-                />
-                <Image
-                    src={mockupSrc}
-                    alt=""
-                    width={mockupWidth}
-                    height={mockupHeight}
-                    className={`audience-mockup-phone ${wide ? "audience-mockup-phone--wide" : "audience-mockup-phone--mobile"
-                        }`}
-                    priority
-                />
+            <div className="audience-hero-card bg-orange-card-invert relative flex flex-col items-center rounded-[32px] text-center">
+                <p className="audience-headline leading-snug text-white">
+                    {headline}
+                </p>
+
+                <div className="audience-mockup-wrap relative flex w-full flex-1 items-end justify-center">
+                    <Image
+                        src="/imagens/background-mobile.png"
+                        alt=""
+                        width={450}
+                        height={450}
+                        className={`${wide ? "audience-mockup-glow--wide" : "audience-mockup-glow"
+                            }`}
+                        aria-hidden
+                    />
+                    <Image
+                        src={mockupSrc}
+                        alt=""
+                        width={mockupWidth}
+                        height={mockupHeight}
+                        className={`audience-mockup-phone ${wide ? "audience-mockup-phone--wide" : "audience-mockup-phone--mobile"
+                            }`}
+                        priority
+                    />
+                </div>
+
+                {wide && secondaryImageSrc && (
+                    <div className="audience-secondary-wrap relative w-full">
+                        <Image
+                            src={secondaryImageSrc}
+                            alt=""
+                            width={900}
+                            height={400}
+                            className="audience-secondary-image"
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -150,7 +172,7 @@ function SwitchCard({
     onClick: () => void;
 }) {
     return (
-        <div className="card-glass audience-switch-card flex flex-col items-center gap-6 rounded-[28px] text-center">
+        <div className="card-glass audience-switch-card flex flex-col items-center justify-center gap-6 rounded-[28px] text-center">
             <p className="audience-switch-title leading-tight text-paper">{title}</p>
             <button onClick={onClick} className="btn-glass-white audience-switch-btn rounded-[32px]">
                 {buttonLabel}
@@ -184,7 +206,9 @@ function AudienceSwitch({
             >
                 <span
                     className="audience-switch-thumb"
-                    style={{ transform: isCandidato ? "translateX(0)" : "translateX(100%)" }}
+                    style={{
+                        transform: isCandidato ? "translateX(0)" : "translateX(40px)",
+                    }}
                 />
             </button>
 

@@ -5,6 +5,9 @@ import { Audiences } from "@/components/sections/audiences";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Footer } from "@/components/sections/footer";
 import { HowItWorksCombined } from "@/components/sections/use-the-system";
+import { ReviewsSection } from "@/components/sections/reviews";
+import { FeaturesSection } from "@/components/sections/features";
+
 
 export default function Home() {
   return (
@@ -15,6 +18,8 @@ export default function Home() {
         <HowItWorks />
         <HowItWorksCombined />
         <Audiences />
+        <ReviewsSection />
+        <FeaturesSection />
         <FinalCta />
       </main>
       <Footer />

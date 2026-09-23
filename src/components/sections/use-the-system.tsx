@@ -18,7 +18,7 @@ import Image from "next/image";
 export function HowItWorksCombined() {
     return (
         <section>
-            <div className="relative overflow-hidden rounded-[32px] bg-orange-card px-5 sm:px-8 md:px-16 pt-16 pb-16">
+            <div className="relative overflow-hidden rounded-t-[32px] bg-orange-card px-5 pt-16 pb-16 sm:px-8 md:px-16">
                 
                 <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div className="decor-ring absolute -left-32 top-[15%] h-[440px] w-[440px]" />
@@ -290,7 +290,7 @@ export function HowItWorksCombined() {
                     </button>
                 </div>
 
-                <div className="mt-12 mb-6 flex justify-center text-center">
+                <div className="my-22 flex justify-center text-center">
                     <p className="text-3xl leading-tight text-paper sm:text-4xl md:text-5xl lg:text-6xl">
                         <span className="block">É para essa conexão que</span>
                         <span className="flex flex-wrap items-center justify-center gap-2">

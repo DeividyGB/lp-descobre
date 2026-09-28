@@ -10,7 +10,7 @@ const links = [
   // { label: "Para candidatos", href: "#candidatos" },
 ];
 
-const loginHref = "https://app.seudominio.com/login"; // ajuste para a URL do sistema
+const loginHref = "https://descobre.app.br";
 
 export function Header() {
   const [open, setOpen] = useState(false);

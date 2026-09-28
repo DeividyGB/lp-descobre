@@ -1,112 +1,117 @@
 "use client";
 
-import { Bot, Building2, Network, HelpCircle, UserCircle2, FileEdit } from "lucide-react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
-    WifiHigh,
-    CellSignalFull,
-    BatteryFull,
-    Buildings,
-    PaperPlaneTilt,
-    Briefcase,
-    ChatCircleDots,
-    CheckCircle,
-    FunnelSimple,
-    MagnifyingGlassPlus,
-} from "@phosphor-icons/react";
+    Bot,
+    Building2,
+    Network,
+    HelpCircle,
+    UserCircle2,
+    FileEdit,
+    Sparkles,
+    ChevronLeft,
+    ChevronRight,
+    ArrowLeft,
+    ArrowRight,
+    User,
+    Mail,
+    CalendarDays,
+    Phone,
+    IdCard,
+    ShieldCheck,
+    Lock,
+    Check,
+} from "lucide-react";
+import { WifiHigh, CellSignalFull, BatteryFull, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
+import { useAppDownloadModal } from "@/components/app-download-modal-context";
+
+/* -------------------------------------------------------------------------- */
+/*  Hook do carrossel (autoplay + pausa no hover)                             */
+/* -------------------------------------------------------------------------- */
+
+function useCarousel(length: number, interval = 6000) {
+    const [active, setActive] = useState(0);
+    const [paused, setPaused] = useState(false);
+
+    const go = useCallback(
+        (i: number) => setActive(((i % length) + length) % length),
+        [length],
+    );
+
+    // `active` nas deps reinicia o timer quando o usuário troca manualmente
+    useEffect(() => {
+        if (paused) return;
+        const id = setInterval(() => setActive((a) => (a + 1) % length), interval);
+        return () => clearInterval(id);
+    }, [paused, length, interval, active]);
+
+    return {
+        active,
+        go,
+        next: () => go(active + 1),
+        prev: () => go(active - 1),
+        setPaused,
+    };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Dados dos carrosséis                                                      */
+/* -------------------------------------------------------------------------- */
+
+type Feature = { Icon: LucideIcon; label: string };
+
+const hireFeatures: Feature[] = [
+    { Icon: Bot, label: "Ajuda de IA" },
+    { Icon: Building2, label: "Cadastro pelo CNPJ" },
+    { Icon: Network, label: "Criação de Vagas" },
+];
+
+const jobFeatures: Feature[] = [
+    { Icon: HelpCircle, label: "Teste de Perfil" },
+    { Icon: UserCircle2, label: "Cadastro pelo CPF" },
+    { Icon: FileEdit, label: "Perfil sem Currículo" },
+];
+
+/* -------------------------------------------------------------------------- */
+/*  Componente principal                                                      */
+/* -------------------------------------------------------------------------- */
 
 export function HowItWorksCombined() {
+    const { open } = useAppDownloadModal();
+
+    const hire = useCarousel(hireFeatures.length);
+    const job = useCarousel(jobFeatures.length);
+
+    // Mesma ordem de `hireFeatures`
+    const webScreens = [
+        { path: "vaga-com-ia", node: <AiDescriptionScreen /> },
+        { path: "cadastro-empresa", node: <CnpjScreen /> },
+        { path: "nova-vaga", node: <NewJobScreen /> },
+    ];
+
+    // Mesma ordem de `jobFeatures`
+    const mobileScreens = [<ProfileTestScreen key="t" />, <CpfSignupScreen key="c" />, <ProfileScreen key="p" />];
+
     return (
         <section id="como-funciona">
             <div className="relative overflow-hidden rounded-t-[32px] bg-orange-card px-5 pt-16 pb-16 sm:px-8 md:px-16">
-                
                 <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div className="decor-ring absolute -left-32 top-[15%] h-[440px] w-[440px]" />
                     <div className="decor-ring absolute -right-32 bottom-[8%] h-[440px] w-[440px]" />
                 </div>
 
-                <div className="relative flex flex-col gap-20 md:gap-34">
-
+                <div className="relative flex flex-col gap-42">
                     <div className="grid md:grid-cols-2 md:items-center">
-
                         <div className="relative flex justify-center pb-6 md:justify-start ml-10">
                             <div className="mockup-wrapper relative w-full">
-
                                 <div className="mockup-backing absolute -left-5 -top-5 h-full w-full rounded-[24px] bg-ink/70" />
-
-                                <div className="mockup-card relative overflow-hidden rounded-[20px] bg-paper shadow-2xl">
-                                    <div className="flex items-center gap-1.5 border-b border-hairline/20 bg-white px-4 py-2.5">
-                                        <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
-                                        <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
-                                        <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
-                                        <span className="ml-3 text-[14px] font-medium text-paper-dim">
-                                            painel-de-vagas
-                                        </span>
-                                    </div>
-
-                                    <div className="bg-flare px-5 pb-9 pt-4 text-white">
-                                        <div className="flex items-center justify-between text-[16px]">
-                                            <span className="font-semibold">Vaga para RH</span>
-                                            <span className="flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[14px] font-medium">
-                                                <span className="status-dot" />
-                                                CONTRATADA
-                                            </span>
-                                        </div>
-                                        <div className="mt-3 flex flex-wrap gap-1.5">
-                                            <span className="rounded-full bg-white/15 px-2.5 py-1 text-[12px] font-medium">
-                                                Assistente Trabalhista
-                                            </span>
-                                            <span className="rounded-full bg-white/15 px-2.5 py-1 text-[12px] font-medium">
-                                                Gestão de Vagas
-                                            </span>
-                                            <span className="rounded-full bg-white/15 px-2.5 py-1 text-[12px] font-medium">
-                                                CLT
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="-mt-5 mx-4 grid grid-cols-3 gap-2 rounded-[14px] bg-white p-3 text-center text-[14px] shadow-md">
-                                        <div>
-                                            <p className="font-semibold text-ink">R$ 7.500,00</p>
-                                            <p className="text-paper-dim">Salário</p>
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-ink">30/07/2026</p>
-                                            <p className="text-paper-dim">Prazo</p>
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-ink">Remoto</p>
-                                            <p className="text-paper-dim">Modalidade</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-4 px-5 py-6">
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-xs font-semibold text-ink">Candidatos compatíveis</p>
-                                            <span className="text-[14px] font-semibold text-flare">12 novos</span>
-                                        </div>
-
-                                        <div className="flex items-center">
-                                            <div className="flex -space-x-2">
-                                                <span className="h-7 w-7 rounded-full border-2 border-white bg-[linear-gradient(135deg,#FA8E12,#DC4D00)]" />
-                                                <span className="h-7 w-7 rounded-full border-2 border-white bg-[linear-gradient(135deg,#ED4F00,#B72500)]" />
-                                                <span className="h-7 w-7 rounded-full border-2 border-white bg-hairline/60" />
-                                                <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-ink text-[9px] font-semibold text-paper">
-                                                    +9
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div className="mb-1 flex items-center justify-between text-[14px] text-paper-dim">
-                                                <span>Melhor match</span>
-                                                <span className="font-semibold text-ink">94%</span>
-                                            </div>
-                                            <div className="h-2 w-full overflow-hidden rounded-full bg-hairline/30">
-                                                <div className="compat-bar h-full rounded-full bg-flare" style={{ width: "94%" }} />
-                                            </div>
-                                        </div>
-                                    </div>
+                                
+                                <div key={hire.active} className="mockup-fade">
+                                    <WebMockup title={webScreens[hire.active].path}>
+                                        {webScreens[hire.active].node}
+                                    </WebMockup>
                                 </div>
 
                                 <div className="notif-card absolute -right-4 top-6 z-20 hidden items-center gap-2 rounded-2xl bg-ink/95 px-6 py-4 shadow-xl sm:flex md:-right-8">
@@ -120,9 +125,14 @@ export function HowItWorksCombined() {
                                 </div>
 
                                 <div className="absolute -bottom-9 left-1/2 -translate-x-1/2">
-                                    <button className="button-encontrar-gente whitespace-nowrap rounded-full px-6 py-3 text-sm text-white shadow-lg">
+                                    <a
+                                        href="http://descobre.app.br/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="button-encontrar-gente whitespace-nowrap rounded-full px-6 py-3 text-sm text-white shadow-lg"
+                                    >
                                         Quero <span className="font-extrabold">encontrar gente</span>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -140,16 +150,19 @@ export function HowItWorksCombined() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center">
-                                <FeatureItem icon={<Bot className="h-14 w-14" />} label="Ajuda de IA" className="relative z-0 -mr-3 sm:-mr-4" />
-                                <FeatureItem icon={<Building2 className="h-16 w-16" />} label="Cadastro pelo CNPJ" highlighted className="relative z-10" />
-                                <FeatureItem icon={<Network className="h-12 w-12" />} label="Criação de Vagas" className="relative z-0 -ml-3 sm:-ml-4" />
-                            </div>
+                            <FeatureCarousel
+                                features={hireFeatures}
+                                active={hire.active}
+                                onSelect={hire.go}
+                                onPrev={hire.prev}
+                                onNext={hire.next}
+                                onPause={hire.setPaused}
+                            />
                         </div>
                     </div>
 
+                    {/* ========================= PROCURA TRABALHO (MOBILE) ========================= */}
                     <div className="grid gap-14 md:grid-cols-2 md:items-center md:gap-20">
-
                         <div className="order-2 flex flex-col items-center gap-6 md:order-1 md:items-center">
                             <div className="relative flex justify-center pt-8">
                                 <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
@@ -163,106 +176,40 @@ export function HowItWorksCombined() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center">
-                                <FeatureItem icon={<HelpCircle className="h-14 w-14" />} label="Teste de Perfil" className="relative z-0 -mr-3 sm:-mr-4" />
-                                <FeatureItem icon={<UserCircle2 className="h-16 w-16" />} label="Cadastro pelo CPF" highlighted className="relative z-10" />
-                                <FeatureItem icon={<FileEdit className="h-12 w-12" />} label="Perfil sem Currículo" className="relative z-0 -ml-3 sm:-ml-4" />
-                            </div>
+                            <FeatureCarousel
+                                features={jobFeatures}
+                                active={job.active}
+                                onSelect={job.go}
+                                onPrev={job.prev}
+                                onNext={job.next}
+                                onPause={job.setPaused}
+                            />
                         </div>
 
                         <div className="order-1 relative flex justify-center pb-10 md:order-2">
-
                             <Image
                                 src="/imagens/background-mobile.png"
                                 alt=""
                                 width={600}
                                 height={500}
                                 className="background-mobile-icon"
-                                // style={{ width: 450, height: 450, maxWidth: "none" }}
                                 priority
                             />
 
                             <div className="mockup-wrapper relative z-10 w-full max-w-[340px]">
-
                                 <div className="mockup-backing absolute -right-4 -top-4 h-full w-full rounded-[46px] bg-ink/70" />
 
-                                <div className="relative rounded-[46px] bg-ink p-3 shadow-2xl">
-                                    <span className="absolute -left-[3px] top-24 h-8 w-[3px] rounded-l bg-ink/80" />
-                                    <span className="absolute -left-[3px] top-36 h-14 w-[3px] rounded-l bg-ink/80" />
-                                    <span className="absolute -left-[3px] top-52 h-14 w-[3px] rounded-l bg-ink/80" />
-                                    <span className="absolute -right-[3px] top-32 h-16 w-[3px] rounded-r bg-ink/80" />
-
-                                    <div className="relative overflow-hidden rounded-[36px] bg-paper">
-                                        <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-ink" />
-
-                                        <div className="flex items-center justify-between bg-white px-6 pb-2 pt-3 text-[11px] font-semibold text-ink">
-                                            <span>16:04</span>
-
-                                            <div className="flex items-center gap-1">
-                                                <CellSignalFull size={13} weight="fill" />
-                                                <WifiHigh size={13} weight="fill" />
-                                                <BatteryFull size={15} weight="fill" />
-                                            </div>
-                                        </div>
-
-                                        <div className="bg-flare px-5 py-5 text-white">
-                                            <p className="text-base font-semibold">Candidaturas</p>
-                                            <p className="text-[11px] text-white/80">
-                                                Acompanhe o status das suas vagas
-                                            </p>
-                                        </div>
-
-                                        <div className="-mt-4 mx-4 grid grid-cols-4 gap-1 rounded-2xl bg-white p-3 text-center shadow-md">
-                                            <StatItem icon={<Briefcase size={14} weight="bold" />} value="2" label="Total" />
-                                            <StatItem icon={<ChatCircleDots size={14} weight="bold" />} value="1" label="Em análise" />
-                                            <StatItem icon={<PaperPlaneTilt size={14} weight="bold" />} value="0" label="Entrevista" />
-                                            <StatItem icon={<CheckCircle size={14} weight="bold" />} value="0" label="Aprovado" />
-                                        </div>
-
-                                        <div className="flex items-center gap-1.5 overflow-x-auto px-5 py-3 text-[10px] font-medium text-paper-dim">
-                                            <span className="whitespace-nowrap rounded-full bg-flare px-3 py-1.5 text-white">
-                                                Todas
-                                            </span>
-                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">
-                                                Em análise
-                                            </span>
-                                            <span className="whitespace-nowrap rounded-full bg-hairline/15 px-3 py-1.5">
-                                                Entrevista
-                                            </span>
-                                            <FunnelSimple size={16} className="ml-auto shrink-0 text-paper-dim" />
-                                        </div>
-
-                                        <div className="space-y-2.5 px-5 pb-50">
-                                            <p className="text-xs font-semibold text-ink">
-                                                Todas as candidaturas{" "}
-                                                <span className="font-normal text-paper-dim">(2 vagas)</span>
-                                            </p>
-
-                                            <CandidacyItem
-                                                color="bg-[linear-gradient(135deg,#FA8E12,#DC4D00)]"
-                                                initials="DE"
-                                                title="Vaga para Engenheiro Civil"
-                                                subtitle="D'Escobre App LTDA"
-                                                status="Enviada"
-                                            />
-
-                                            <CandidacyItem
-                                                color="bg-[linear-gradient(135deg,#8b5cf6,#6d28d9)]"
-                                                initials="GC"
-                                                title="Professor de CrossFit"
-                                                subtitle="GYM O'Escobre Empresa LTDA"
-                                                status="Enviada"
-                                            />
-                                        </div>
-
-                                        <div className="flex justify-center pb-2">
-                                            <div className="h-1 w-28 rounded-full bg-ink/20" />
-                                        </div>
+                                <PhoneShell>
+                                    <div key={job.active} className="mockup-fade h-full">
+                                        {mobileScreens[job.active]}
                                     </div>
-                                </div>
+                                </PhoneShell>
 
                                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
-                                    <button className="button-encontrar-gente flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm shadow-lg">
+                                    <button
+                                        className="button-encontrar-gente flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm shadow-lg"
+                                        onClick={open}
+                                    >
                                         Quero <span className="font-extrabold">uma oportunidade</span>
                                     </button>
                                 </div>
@@ -281,11 +228,16 @@ export function HowItWorksCombined() {
                         priority
                     />
 
-                    <button className="btn-glass-white cta-conhecer flex items-center gap-2 rounded-full shadow-lg">
+                    <a
+                        href="http://descobre.app.br/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-glass-white cta-conhecer flex items-center gap-2 rounded-full shadow-lg"
+                    >
                         Quero <span className="font-extrabold"><span className="text-gradient font-extrabold">conhecer</span></span>
-                    </button>
+                    </a>
 
-                    <button className="btn-glass-white cta-vaga flex items-center gap-2 rounded-full shadow-lg">
+                    <button className="btn-glass-white cta-vaga flex items-center gap-2 rounded-full shadow-lg" onClick={open}>
                         Quero uma <span className="text-gradient font-extrabold">vaga</span>
                     </button>
                 </div>
@@ -295,12 +247,7 @@ export function HowItWorksCombined() {
                         <span className="block">É para essa conexão que</span>
                         <span className="flex flex-wrap items-center justify-center gap-2">
                             o
-                            <Image
-                                src="/icones/DESCOBRE-ICON.svg"
-                                alt=""
-                                width={350}
-                                height={350}
-                            />
+                            <Image src="/icones/DESCOBRE-ICON.svg" alt="" width={350} height={350} />
                             <span className="font-extrabold">existe!</span>
                         </span>
                     </p>
@@ -310,73 +257,594 @@ export function HowItWorksCombined() {
     );
 }
 
-function StatItem({ value, label }: { value: string; label: string }) {
-    return (
-        <div>
-            <p className="text-sm font-semibold text-ink">{value}</p>
-            <p className="text-[8px] text-paper-dim">{label}</p>
-        </div>
-    );
-}
+/* -------------------------------------------------------------------------- */
+/*  Carrossel de features                                                     */
+/* -------------------------------------------------------------------------- */
 
-function CandidacyItem({
-    color,
-    initials,
-    title,
-    subtitle,
-    status,
+function FeatureCarousel({
+    features,
+    active,
+    onSelect,
+    onPrev,
+    onNext,
+    onPause,
 }: {
-    color: string;
-    initials: string;
-    title: string;
-    subtitle: string;
-    status: string;
+    features: Feature[];
+    active: number;
+    onSelect: (i: number) => void;
+    onPrev: () => void;
+    onNext: () => void;
+    onPause: (paused: boolean) => void;
 }) {
+    const n = features.length;
+    // [anterior, ativo, próximo] — o ativo sempre fica no centro
+    const order = [(active - 1 + n) % n, active, (active + 1) % n];
+
     return (
-        <div className="flex items-center gap-2 rounded-[14px] border border-hairline/15 px-3 py-2.5">
-            <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[9px] font-bold text-white ${color}`}>
-                {initials}
-            </span>
-            <div className="flex-1 leading-tight">
-                <p className="text-[11px] font-semibold text-ink">{title}</p>
-                <p className="text-[9px] text-paper-dim">{subtitle}</p>
-                <span className="mt-0.5 inline-block rounded-full bg-hairline/15 px-2 py-0.5 text-[8px] font-medium text-paper-dim">
-                    {status}
-                </span>
+        <div
+            className="flex flex-col items-center gap-5"
+            onMouseEnter={() => onPause(true)}
+            onMouseLeave={() => onPause(false)}
+        >
+            <div className="flex items-center">
+                {order.map((idx, pos) => (
+                    <FeatureItem
+                        key={idx}
+                        Icon={features[idx].Icon}
+                        label={features[idx].label}
+                        highlighted={pos === 1}
+                        onClick={() => onSelect(idx)}
+                        className={
+                            pos === 0
+                                ? "relative z-0 -mr-3 sm:-mr-4"
+                                : pos === 1
+                                    ? "relative z-10"
+                                    : "relative z-0 -ml-3 sm:-ml-4"
+                        }
+                    />
+                ))}
             </div>
-            <span className="text-paper-dim">›</span>
+
+            <div className="flex items-center gap-4">
+                <button
+                    type="button"
+                    onClick={onPrev}
+                    aria-label="Funcionalidade anterior"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/35"
+                >
+                    <ChevronLeft className="h-5 w-5" />
+                </button>
+
+                <div className="flex items-center gap-2">
+                    {features.map((f, i) => (
+                        <button
+                            key={f.label}
+                            type="button"
+                            onClick={() => onSelect(i)}
+                            aria-label={f.label}
+                            aria-current={i === active}
+                            className={`h-2.5 rounded-full transition-all duration-300 ${i === active ? "w-8 bg-white" : "w-2.5 bg-white/40 hover:bg-white/70"
+                                }`}
+                        />
+                    ))}
+                </div>
+
+                <button
+                    type="button"
+                    onClick={onNext}
+                    aria-label="Próxima funcionalidade"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/35"
+                >
+                    <ChevronRight className="h-5 w-5" />
+                </button>
+            </div>
         </div>
     );
 }
 
 function FeatureItem({
-    icon,
+    Icon,
     label,
     highlighted,
+    onClick,
     className = "",
 }: {
-    icon: React.ReactNode;
+    Icon: LucideIcon;
     label: string;
     highlighted?: boolean;
+    onClick: () => void;
     className?: string;
 }) {
+    const words = label.split(" ");
+
     return (
-        <div
-            className={`feature-card flex flex-col items-center gap-3 rounded-[28px] text-center text-[#5C1E00] ${highlighted ? "feature-card--highlighted py-10" : "py-7 px-3"
+        <button
+            type="button"
+            onClick={onClick}
+            aria-pressed={highlighted}
+            className={`feature-card flex flex-col items-center gap-3 rounded-[28px] text-center text-[#5C1E00] transition-all duration-300 ${highlighted ? "feature-card--highlighted py-10" : "cursor-pointer px-3 py-7 hover:scale-105"
                 } ${className}`}
         >
-            <span>{icon}</span>
+            <span>
+                <Icon className={highlighted ? "h-16 w-16" : "h-12 w-12"} />
+            </span>
             <span className={`font-medium leading-tight text-white ${highlighted ? "text-[24px]" : "text-[16px]"}`}>
-                {label.split(" ").length > 1 ? (
+                {words.length > 1 ? (
                     <>
-                        {label.split(" ").slice(0, -2).join(" ")}
+                        {words.slice(0, -2).join(" ")}
                         <br />
-                        <span className="font-extrabold">{label.split(" ").slice(-2).join(" ")}</span>
+                        <span className="font-extrabold">{words.slice(-2).join(" ")}</span>
                     </>
                 ) : (
                     label
                 )}
             </span>
+        </button>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Moldura dos mockups                                                       */
+/* -------------------------------------------------------------------------- */
+
+function WebMockup({ title, children }: { title: string; children: ReactNode }) {
+    return (
+        <div className="mockup-card relative overflow-hidden rounded-[20px] bg-paper shadow-2xl">
+            <div className="flex items-center gap-1.5 border-b border-hairline/20 bg-white px-4 py-2.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
+                <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
+                <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
+                <span className="ml-3 text-[14px] font-medium text-paper-dim">{title}</span>
+            </div>
+            {/* altura fixa: evita "pulos" de layout ao trocar de tela */}
+            <div className="h-[470px] overflow-hidden">{children}</div>
+        </div>
+    );
+}
+
+function PhoneShell({ children }: { children: ReactNode }) {
+    return (
+        <div className="relative rounded-[46px] bg-ink p-3 shadow-2xl">
+            <span className="absolute -left-[3px] top-24 h-8 w-[3px] rounded-l bg-ink/80" />
+            <span className="absolute -left-[3px] top-36 h-14 w-[3px] rounded-l bg-ink/80" />
+            <span className="absolute -left-[3px] top-52 h-14 w-[3px] rounded-l bg-ink/80" />
+            <span className="absolute -right-[3px] top-32 h-16 w-[3px] rounded-r bg-ink/80" />
+
+            <div className="relative overflow-hidden rounded-[36px] bg-paper">
+                <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-ink" />
+
+                <div className="flex items-center justify-between bg-white px-6 pb-2 pt-3 text-[11px] font-semibold text-ink">
+                    <span>16:04</span>
+                    <div className="flex items-center gap-1">
+                        <CellSignalFull size={13} weight="fill" />
+                        <WifiHigh size={13} weight="fill" />
+                        <BatteryFull size={15} weight="fill" />
+                    </div>
+                </div>
+
+                <div className="h-[560px]">{children}</div>
+
+                <div className="flex justify-center pb-2">
+                    <div className="h-1 w-28 rounded-full bg-ink/20" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Telas WEB                                                                 */
+/* -------------------------------------------------------------------------- */
+
+function Field({ label, value, placeholder }: { label: string; value?: string; placeholder?: string }) {
+    return (
+        <div className="min-w-0">
+            <p className="mb-1 text-[10px] font-semibold text-ink">{label}</p>
+            <div className="truncate rounded-lg border border-hairline/25 bg-white px-2.5 py-1.5 text-[10px]">
+                {value ? <span className="text-ink">{value}</span> : <span className="text-paper-dim">{placeholder}</span>}
+            </div>
+        </div>
+    );
+}
+
+function Card({ title, subtitle, action, children }: { title: string; subtitle: string; action?: ReactNode; children: ReactNode }) {
+    return (
+        <div className="rounded-2xl border border-hairline/20 bg-white p-4 shadow-sm">
+            <div className="mb-3 flex items-start justify-between gap-2">
+                <div>
+                    <p className="text-[12px] font-bold text-ink">{title}</p>
+                    <p className="text-[10px] text-paper-dim">{subtitle}</p>
+                </div>
+                {action}
+            </div>
+            {children}
+        </div>
+    );
+}
+
+function Stepper({ step }: { step: 1 | 2 }) {
+    const dot = (n: number, label: string) => (
+        <div className="flex items-center gap-2">
+            <span
+                className={`flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold ${step >= n ? "bg-flare text-white" : "bg-hairline/20 text-paper-dim"
+                    }`}
+            >
+                {n}
+            </span>
+            <span className={`text-[10px] font-semibold ${step >= n ? "text-ink" : "text-paper-dim"}`}>{label}</span>
+        </div>
+    );
+    return (
+        <div className="flex items-center gap-3 rounded-2xl border border-hairline/20 bg-white px-4 py-2.5">
+            {dot(1, "Informações da vaga")}
+            <div className="h-px flex-1 bg-hairline/25" />
+            {dot(2, "Contrato e configurações")}
+        </div>
+    );
+}
+
+function NewJobScreen() {
+    return (
+        <div className="space-y-3 p-4">
+            <div>
+                <p className="text-[16px] font-bold text-ink">Nova vaga</p>
+                <p className="text-[10px] text-paper-dim">Preencha os dados para publicar uma nova vaga</p>
+            </div>
+
+            <Stepper step={1} />
+
+            <Card title="Informações básicas" subtitle="Dados principais da vaga">
+                <div className="grid grid-cols-3 gap-2.5">
+                    <div className="col-span-2">
+                        <Field label="Título da vaga" value="Auxiliar de Produção" />
+                    </div>
+                    <Field label="Formato" value="Presencial" />
+                    <div className="col-span-1">
+                        <Field label="Setor" value="Indústria" />
+                    </div>
+                    <div className="col-span-2">
+                        <Field label="Cargo / Nível" value="Auxiliar · Operacional" />
+                    </div>
+                </div>
+            </Card>
+
+            <Card
+                title="Descrição da vaga"
+                subtitle="Responsabilidades, requisitos e informações essenciais"
+                action={
+                    <span className="flex items-center gap-1 rounded-md border border-flare/30 bg-flare/10 px-2 py-1 text-[9px] font-semibold text-flare">
+                        <Sparkles className="h-3 w-3" /> Gerar com IA
+                    </span>
+                }
+            >
+                <div className="h-14 rounded-lg border border-hairline/20 bg-paper px-2.5 py-2 text-[10px] text-paper-dim">
+                    Descreva as responsabilidades, requisitos e diferenciais, ou use a IA para gerar automaticamente...
+                </div>
+            </Card>
+
+            <div className="flex items-center justify-between pt-1">
+                <span className="flex items-center gap-1 rounded-lg border border-hairline/25 bg-white px-3 py-1.5 text-[10px] text-ink">
+                    <ArrowLeft className="h-3 w-3" /> Cancelar
+                </span>
+                <span className="flex items-center gap-1 rounded-lg bg-flare px-3.5 py-1.5 text-[10px] font-semibold text-white shadow">
+                    Próximo <ArrowRight className="h-3 w-3" />
+                </span>
+            </div>
+        </div>
+    );
+}
+
+function AiDescriptionScreen() {
+    return (
+        <div className="space-y-3 p-4">
+            <div>
+                <p className="text-[16px] font-bold text-ink">Nova vaga</p>
+                <p className="text-[10px] text-paper-dim">Deixe a IA escrever a descrição para você</p>
+            </div>
+
+            <Stepper step={1} />
+
+            <Card title="Informações básicas" subtitle="Dados principais da vaga">
+                <div className="grid grid-cols-3 gap-2.5">
+                    <div className="col-span-2">
+                        <Field label="Título da vaga" value="Auxiliar de Produção" />
+                    </div>
+                    <Field label="Formato" value="Presencial" />
+                </div>
+            </Card>
+
+            <Card
+                title="Descrição da vaga"
+                subtitle="Gerada com base no título e no cargo"
+                action={
+                    <span className="flex items-center gap-1 rounded-md bg-flare px-2 py-1 text-[9px] font-semibold text-white shadow">
+                        <Sparkles className="h-3 w-3" /> Gerando...
+                    </span>
+                }
+            >
+                <div className="space-y-2 rounded-lg border border-flare/25 bg-flare/5 p-3 text-[10px] leading-relaxed text-ink">
+                    <p className="font-semibold">Responsabilidades</p>
+                    <ul className="list-disc space-y-0.5 pl-4 text-paper-dim">
+                        <li>Abastecer a linha de produção com materiais e embalagens</li>
+                        <li>Embalar, conferir e organizar os produtos finalizados</li>
+                    </ul>
+                    <p className="font-semibold">Requisitos</p>
+                    <ul className="list-disc space-y-0.5 pl-4 text-paper-dim">
+                        <li>Ensino médio completo</li>
+                        <li>Disponibilidade de horário</li>
+                    </ul>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                        <span className="rounded-full bg-flare/15 px-2 py-0.5 text-[9px] font-semibold text-flare">
+                            R$ 2.350,00
+                        </span>
+                        <span className="rounded-full bg-hairline/15 px-2 py-0.5 text-[9px] font-medium text-paper-dim">CLT</span>
+                        <span className="rounded-full bg-hairline/15 px-2 py-0.5 text-[9px] font-medium text-paper-dim">Presencial</span>
+                    </div>
+                    <span className="inline-block h-3 w-1 animate-pulse rounded bg-flare align-middle" />
+                </div>
+            </Card>
+        </div>
+    );
+}
+
+/** Cadastro pelo CNPJ */
+function CnpjScreen() {
+    return (
+        <div className="space-y-3 p-4">
+            <div>
+                <p className="text-[16px] font-bold text-ink">Cadastre sua empresa</p>
+                <p className="text-[10px] text-paper-dim">Informe o CNPJ e preenchemos o resto</p>
+            </div>
+
+            <Card title="Buscar empresa" subtitle="Consulta automática na Receita Federal">
+                <div className="flex items-end gap-2">
+                    <div className="flex-1">
+                        <Field label="CNPJ" value="12.345.678/0001-90" />
+                    </div>
+                    <span className="flex items-center gap-1 rounded-lg bg-flare px-3 py-1.5 text-[10px] font-semibold text-white">
+                        Buscar
+                    </span>
+                </div>
+                <p className="mt-2 flex items-center gap-1 text-[10px] font-medium text-green-600">
+                    <CheckCircle size={13} weight="fill" /> Empresa encontrada e ativa
+                </p>
+            </Card>
+
+            <Card title="Dados da empresa" subtitle="Preenchidos automaticamente">
+                <div className="grid grid-cols-2 gap-2.5">
+                    <div className="col-span-2">
+                        <Field label="Razão social" value="NovaPack Indústria LTDA" />
+                    </div>
+                    <Field label="Nome fantasia" value="NovaPack" />
+                    <Field label="Porte" value="Média empresa" />
+                    <Field label="Cidade / UF" value="Campinas / SP" />
+                    <Field label="Atividade" value="Embalagens" />
+                </div>
+            </Card>
+
+            <div className="flex justify-end">
+                <span className="flex items-center gap-1 rounded-lg bg-flare px-3.5 py-1.5 text-[10px] font-semibold text-white shadow">
+                    Confirmar empresa <ArrowRight className="h-3 w-3" />
+                </span>
+            </div>
+        </div>
+    );
+}
+
+function MobileHeader({ title, subtitle }: { title: string; subtitle: string }) {
+    return (
+        <div className="bg-flare px-5 py-5 text-white">
+            <p className="text-base font-semibold">{title}</p>
+            <p className="text-[11px] text-white/80">{subtitle}</p>
+        </div>
+    );
+}
+
+function MobileField({
+    label,
+    value,
+    Icon,
+    valid,
+    className = "",
+}: {
+    label: string;
+    value: string;
+    Icon: LucideIcon;
+    valid?: boolean;
+    className?: string;
+}) {
+    return (
+        <div className={`min-w-0 ${className}`}>
+            <p className="mb-1 text-[10px] font-semibold text-ink">{label}</p>
+            <div
+                className={`flex items-center gap-2 rounded-xl border bg-white px-3 py-2.5 shadow-sm ${valid ? "border-green-500/50" : "border-hairline/25"
+                    }`}
+            >
+                <Icon className={`h-3.5 w-3.5 shrink-0 ${valid ? "text-green-600" : "text-paper-dim"}`} />
+                <span className="flex-1 truncate text-[11px] font-medium text-ink">{value}</span>
+                {valid && (
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-green-500">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                    </span>
+                )}
+            </div>
+        </div>
+    );
+}
+
+function MobileButton({ children }: { children: ReactNode }) {
+    return (
+        <div className="rounded-full bg-flare py-2.5 text-center text-[12px] font-semibold text-white shadow-md">
+            {children}
+        </div>
+    );
+}
+
+function ProfileTestScreen() {
+    const options = ["Sozinho, com foco total", "Em equipe, trocando ideias", "Liderando o time", "Depende do projeto"];
+    return (
+        <div className="flex h-full flex-col">
+            <MobileHeader title="Teste de Perfil" subtitle="Descubra como você trabalha melhor" />
+            <div className="flex-1 space-y-4 px-5 py-5">
+                <div>
+                    <div className="mb-1 flex justify-between text-[10px] text-paper-dim">
+                        <span>Pergunta 3 de 10</span>
+                        <span className="font-semibold text-ink">30%</span>
+                    </div>
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-hairline/30">
+                        <div className="h-full rounded-full bg-flare" style={{ width: "30%" }} />
+                    </div>
+                </div>
+
+                <p className="text-[14px] font-semibold leading-snug text-ink">Como você prefere trabalhar no dia a dia?</p>
+
+                <div className="space-y-2">
+                    {options.map((o, i) => (
+                        <div
+                            key={o}
+                            className={`flex items-center gap-2 rounded-xl border px-3 py-2.5 text-[11px] ${i === 1 ? "border-flare bg-flare/10 font-semibold text-ink" : "border-hairline/20 bg-white text-paper-dim"
+                                }`}
+                        >
+                            <span
+                                className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${i === 1 ? "border-flare bg-flare" : "border-hairline/40"
+                                    }`}
+                            >
+                                {i === 1 && <span className="h-1.5 w-1.5 rounded-full bg-white" />}
+                            </span>
+                            {o}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="px-5 pb-4">
+                <MobileButton>Próxima</MobileButton>
+            </div>
+        </div>
+    );
+}
+
+function CpfSignupScreen() {
+    return (
+        <div className="flex h-full flex-col">
+            <MobileHeader title="Crie seu perfil" subtitle="Leva menos de 1 minuto" />
+
+            <div className="flex-1 space-y-3 px-5 pt-4">
+                {/* Etapas */}
+                <div>
+                    <div className="mb-1.5 flex items-center justify-between text-[10px]">
+                        <span className="font-semibold text-ink">Etapa 1 de 3</span>
+                        <span className="text-paper-dim">Dados pessoais</span>
+                    </div>
+                    <div className="flex gap-1.5">
+                        <span className="h-1.5 flex-1 rounded-full bg-flare" />
+                        <span className="h-1.5 flex-1 rounded-full bg-hairline/30" />
+                        <span className="h-1.5 flex-1 rounded-full bg-hairline/30" />
+                    </div>
+                </div>
+
+                {/* CPF verificado */}
+                <div className="space-y-1.5">
+                    <MobileField label="CPF" value="123.456.789-00" Icon={IdCard} valid />
+                    <p className="flex items-center gap-1 text-[9px] font-medium text-green-600">
+                        <ShieldCheck className="h-3 w-3" /> CPF verificado com sucesso
+                    </p>
+                </div>
+
+                <MobileField label="Nome completo" value="Marina Souza" Icon={User} valid />
+
+                <div className="grid grid-cols-2 gap-2.5">
+                    <MobileField label="Nascimento" value="14/03/1998" Icon={CalendarDays} />
+                    <MobileField label="Celular" value="(11) 98765-4321" Icon={Phone} />
+                </div>
+
+                <MobileField label="E-mail" value="marina@email.com" Icon={Mail} valid />
+
+                {/* Termos */}
+                <div className="flex items-start gap-2 pt-0.5">
+                    <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded bg-flare">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                    </span>
+                    <p className="text-[9px] leading-snug text-paper-dim">
+                        Li e concordo com os <span className="font-semibold text-flare">Termos de uso</span> e a{" "}
+                        <span className="font-semibold text-flare">Política de privacidade</span>.
+                    </p>
+                </div>
+            </div>
+
+            <div className="space-y-2 px-5 pb-4 pt-3">
+                <div className="flex items-center justify-center gap-2 rounded-full bg-flare py-3 text-[12px] font-semibold text-white shadow-md">
+                    Continuar <ArrowRight className="h-3.5 w-3.5" />
+                </div>
+                <p className="flex items-center justify-center gap-1 text-[9px] text-paper-dim">
+                    <Lock className="h-2.5 w-2.5" /> Seus dados estão protegidos
+                </p>
+            </div>
+        </div>
+    );
+}
+
+function ProfileScreen() {
+    return (
+        <div className="flex h-full flex-col">
+            <MobileHeader title="Meu perfil" subtitle="Sem currículo, sem complicação" />
+            <div className="flex-1 space-y-4 px-5 py-5">
+                <div className="flex items-center gap-3">
+                    <span className="relative h-14 w-14 shrink-0">
+                        <span className="relative block h-full w-full overflow-hidden rounded-full border-[3px] border-white bg-[linear-gradient(135deg,#FA8E12,#DC4D00)] shadow-md ring-2 ring-flare/40">
+                            <Image
+                                src="/imagens/woman-smiling.png"
+                                alt="Marina Souza"
+                                fill
+                                sizes="56px"
+                                className="object-cover"
+                            />
+                        </span>
+                        <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
+                    </span>
+
+                    <div className="leading-tight">
+                        <p className="text-[13px] font-semibold text-ink">Marina Souza</p>
+                        <p className="text-[10px] text-paper-dim">Analista de RH · São Paulo</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="mb-1 flex justify-between text-[10px] text-paper-dim">
+                        <span>Perfil completo</span>
+                        <span className="font-semibold text-ink">85%</span>
+                    </div>
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-hairline/30">
+                        <div className="h-full rounded-full bg-flare" style={{ width: "85%" }} />
+                    </div>
+                </div>
+
+                <div>
+                    <p className="mb-1.5 text-[11px] font-semibold text-ink">Perfil comportamental</p>
+                    <div className="flex flex-wrap gap-1.5">
+                        {["Comunicativa", "Organizada", "Colaborativa"].map((t) => (
+                            <span key={t} className="rounded-full bg-flare/10 px-2.5 py-1 text-[10px] font-medium text-flare">
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <div>
+                    <p className="mb-1.5 text-[11px] font-semibold text-ink">Habilidades</p>
+                    <div className="flex flex-wrap gap-1.5">
+                        {["CLT", "Recrutamento", "Excel", "Atendimento"].map((t) => (
+                            <span key={t} className="rounded-full bg-hairline/15 px-2.5 py-1 text-[10px] font-medium text-paper-dim">
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between rounded-xl bg-white p-3 shadow-md">
+                    <span className="text-[11px] text-paper-dim">Vagas compatíveis</span>
+                    <span className="text-[13px] font-bold text-flare">8 novas</span>
+                </div>
+            </div>
         </div>
     );
 }

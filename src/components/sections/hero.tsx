@@ -36,7 +36,14 @@ export function Hero() {
               </Button>
 
               <Button size="lg" variant="outline" className="btn-company gap-0">
-                Sou<span className="ml-1 font-extrabold">EMPRESA</span>
+                <a
+                  href="http://descobre.app.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  // className="btn-company inline-flex items-center gap-0"
+                >
+                  Sou<span className="ml-1 font-extrabold">EMPRESA</span>
+                </a>
               </Button>
             </div>
           </div>

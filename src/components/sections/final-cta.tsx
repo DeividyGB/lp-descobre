@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useAppDownloadModal } from "../app-download-modal-context";
 
 export function FinalCta() {
+  const { open } = useAppDownloadModal();
+
   return (
     <section className="bg-ink px-4 py-20 sm:px-6">
       <div className="mx-auto max-w-[1650px]">
@@ -11,8 +14,6 @@ export function FinalCta() {
 
           <div className="grid md:grid-cols-2 md:items-center">
 
-            {/* Card de texto — flui normalmente, tamanho definido só pelo
-                próprio conteúdo, centralizado verticalmente na linha */}
             <div className="card-glass final-cta-panel relative z-10 m-6 flex flex-col items-start gap-8 rounded-[32px] sm:m-10 md:m-16">
               <Image
                 src="/icones/DESCOBRE-ICON.svg"
@@ -28,11 +29,18 @@ export function FinalCta() {
               </h2>
 
               <div className="flex flex-wrap items-center gap-4">
-                <Button size="lg" className="btn-candidate rounded-full">
+                <Button size="lg" className="btn-candidate rounded-full" onClick={open}>
                   Sou <span className="font-extrabold">candidato</span>
                 </Button>
                 <Button size="lg" variant="outline" className="btn-company rounded-full">
-                  Sou <span className="font-extrabold">empresa</span>
+                  <a
+                    href="http://descobre.app.br/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+
+                    Sou <span className="font-extrabold">empresa</span>
+                  </a>
                 </Button>
               </div>
             </div>

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useAppDownloadModal } from "@/components/app-download-modal-context";
 
 export interface Review {
   id: string;
@@ -33,7 +35,7 @@ export const reviews: Review[] = [
   },
   {
     id: "review-2",
-    name: "Camila Torres",
+    name: "Queen Latifah",
     avatarSrc: "/imagens/reviews/avatar-2.jpg",
     rating: 5,
     quote:
@@ -157,6 +159,7 @@ export function ReviewsSection({
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
   const items = reviewsProp ?? reviews;
+  const { open } = useAppDownloadModal();
 
   useEffect(() => {
     const track = trackRef.current;
@@ -234,7 +237,7 @@ export function ReviewsSection({
   return (
     <section className="relative overflow-hidden border-b border-hairline/60 bg-[#0b0908] py-52 text-white">
       <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-70"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
         aria-hidden="true"
       >
         <Image
@@ -286,12 +289,17 @@ export function ReviewsSection({
           </ul>
         </div>
 
-        <button
-          type="button"
-          className="bg-flare text-ink hover:bg-flare-deep hover:text-paper h-18 px-12 btn-company rounded-full mt-16 text-[46px]"
-        >
-          {displayCtaLabel}
-        </button>
+        <div className="mt-28 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button size="lg" className="btn-candidate gap-0 h-16" onClick={open}>
+            Quero<span className="ml-1 font-extrabold">TRABALHAR</span>
+          </Button>
+
+          <Button size="lg" variant="outline" className="btn-company gap-0 h-16">
+            <a href="http://descobre.app.br/" target="_blank" rel="noopener noreferrer">
+              Quero<span className="ml-1 font-extrabold">CONTRATAR</span>
+            </a>
+          </Button>
+        </div>
       </div>
     </section>
   );

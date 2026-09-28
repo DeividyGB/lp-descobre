@@ -10,51 +10,55 @@ export function Audiences() {
     const isCandidato = audience === "candidato";
 
     return (
-        <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 sm:-mt-12 sm:pt-20" id="empresas">
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 md:flex-row md:items-center md:justify-center md:gap-6">
+        <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 max-md:overflow-x-clip sm:-mt-12 sm:pt-20" id="empresas">
+            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 max-md:pb-16 md:flex-row md:items-center md:justify-center md:gap-6">
                 <div
-                    key={`hero-${audience}`}
-                    className={`w-full min-w-[500px] animate-hero-fade-up ${isCandidato ? "md:order-1" : "md:order-3"
+                    className={`w-full min-w-[500px] max-md:min-w-0 animate-hero-fade-up ${isCandidato ? "md:order-1" : "md:order-3"
                         }`}
                 >
-                    {isCandidato ? (
-                        <HeroCard
-                            headline={
-                                <>
-                                    Deixe o algoritmo achar a vaga{" "}
-                                    <span className="font-extrabold">perfeita</span> enquanto
-                                    você <span className="font-extrabold italic">foca no seu talento</span>.
-                                </>
-                            }
-                            mockupSrc="/imagens/mockup-mobile-audiencia.png"
-                            mockupWidth={450}
-                            mockupHeight={450}
-                        />
-                    ) : (
-                        <HeroCard
-                            headline={
-                                <>
-                                    Feche vagas em <span className="font-extrabold">48h</span>,
-                                    não em 30 dias. Decisões baseadas em{" "}
-                                    <span className="font-extrabold italic">dados e conexões reais</span>.
-                                </>
-                            }
-                            mockupSrc="/imagens/mockup-pc-audiencia.png"
-                            mockupWidth={500}
-                            mockupHeight={500}
-                            wide
-                            secondaryImageSrc="/imagens/print-sistema-mockup.png"
-                        />
-                    )}
+                    <div className="grid">
+                        <HeroSlot active={isCandidato}>
+                            <HeroCard
+                                headline={
+                                    <>
+                                        Deixe o algoritmo achar a vaga{" "}
+                                        <span className="font-extrabold">perfeita</span> enquanto
+                                        você <span className="font-extrabold italic">foca no seu talento</span>.
+                                    </>
+                                }
+                                mockupSrc="/imagens/mockup-mobile-audiencia.png"
+                                mockupWidth={450}
+                                mockupHeight={450}
+                                priority
+                            />
+                        </HeroSlot>
+
+                        <HeroSlot active={!isCandidato}>
+                            <HeroCard
+                                headline={
+                                    <>
+                                        Feche vagas em <span className="font-extrabold">48h</span>,
+                                        não em 30 dias. Decisões baseadas em{" "}
+                                        <span className="font-extrabold italic">dados e conexões reais</span>.
+                                    </>
+                                }
+                                mockupSrc="/imagens/mockup-pc-audiencia.png"
+                                mockupWidth={500}
+                                mockupHeight={500}
+                                wide
+                                secondaryImageSrc="/imagens/print-sistema-mockup.png"
+                            />
+                        </HeroSlot>
+                    </div>
                 </div>
 
-                <div className="order-2 flex shrink-0 items-center justify-center py-2 md:py-0">
+                <div className="order-2 flex shrink-0 items-center justify-center py-2 max-md:order-first md:py-0">
                     <AudienceSwitch value={audience} onChange={setAudience} />
                 </div>
 
                 <div
                     key={`switch-card-${audience}`}
-                    className={`w-full max-w-lg min-w-[450px] animate-hero-fade-up ${isCandidato ? "md:order-3" : "md:order-1"
+                    className={`w-full max-w-lg min-w-[450px] max-md:min-w-0 animate-hero-fade-up ${isCandidato ? "md:order-3" : "md:order-1"
                         }`}
                 >
                     {isCandidato ? (
@@ -94,6 +98,20 @@ export function Audiences() {
     );
 }
 
+function HeroSlot({ active, children }: { active: boolean; children: React.ReactNode }) {
+    return (
+        <div
+            aria-hidden={!active}
+            className={`col-start-1 row-start-1 self-center transition-all duration-500 ease-out ${active
+                ? "translate-y-0 opacity-100"
+                : "pointer-events-none translate-y-3 opacity-0"
+                }`}
+        >
+            {children}
+        </div>
+    );
+}
+
 function HeroCard({
     headline,
     mockupSrc,
@@ -101,6 +119,7 @@ function HeroCard({
     mockupHeight,
     wide = false,
     secondaryImageSrc,
+    priority = false,
 }: {
     headline: React.ReactNode;
     mockupSrc: string;
@@ -108,6 +127,7 @@ function HeroCard({
     mockupHeight: number;
     wide?: boolean;
     secondaryImageSrc?: string;
+    priority?: boolean;
 }) {
     return (
         <div className="audience-hero-wrap relative">
@@ -116,7 +136,7 @@ function HeroCard({
                 alt=""
                 width={900}
                 height={900}
-                className="audience-hero-glow"
+                className="audience-hero-glow max-md:left-1/2! max-md:h-[460px]! max-md:w-[400px]!"
                 aria-hidden
             />
 
@@ -140,14 +160,16 @@ function HeroCard({
                         alt=""
                         width={mockupWidth}
                         height={mockupHeight}
-                        className={`audience-mockup-phone ${wide ? "audience-mockup-phone--wide" : "audience-mockup-phone--mobile"
+                        className={`audience-mockup-phone ${wide
+                            ? "audience-mockup-phone--wide max-md:w-[min(100cqw,580px)]!"
+                            : "audience-mockup-phone--mobile"
                             }`}
-                        priority
+                        priority={priority}
                     />
                 </div>
 
                 {wide && secondaryImageSrc && (
-                    <div className="audience-secondary-wrap relative w-full">
+                    <div className="audience-secondary-wrap relative w-full max-md:mt-[-41cqw]!">
                         <Image
                             src={secondaryImageSrc}
                             alt=""
@@ -172,9 +194,12 @@ function SwitchCard({
     onClick: () => void;
 }) {
     return (
-        <div className="card-glass audience-switch-card flex flex-col items-center justify-center gap-6 rounded-[28px] text-center">
-            <p className="audience-switch-title leading-tight text-paper">{title}</p>
-            <button onClick={onClick} className="btn-glass-white audience-switch-btn rounded-[32px]">
+        <div className="card-glass audience-switch-card flex flex-col items-center justify-center gap-6 rounded-[28px] text-center max-md:aspect-auto!">
+            <p className="audience-switch-title leading-tight text-paper max-md:text-[clamp(2rem,11cqw,3rem)]!">{title}</p>
+            <button
+                onClick={onClick}
+                className="btn-glass-white audience-switch-btn rounded-[32px] max-md:text-[clamp(1rem,5cqw,1.3rem)]!"
+            >
                 {buttonLabel}
             </button>
         </div>
@@ -191,7 +216,7 @@ function AudienceSwitch({
     const isCandidato = value === "candidato";
 
     return (
-        <div className="audience-switch-wrap">
+        <div className="audience-switch-wrap max-md:flex-row!">
             <span className={`audience-switch-label ${isCandidato ? "is-active" : ""}`}>
                 Candidato
             </span>

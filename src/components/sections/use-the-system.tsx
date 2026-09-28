@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import {
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+    type ReactNode,
+} from "react";
 import type { LucideIcon } from "lucide-react";
 import {
     Bot,
@@ -27,9 +34,7 @@ import { WifiHigh, CellSignalFull, BatteryFull, CheckCircle } from "@phosphor-ic
 import Image from "next/image";
 import { useAppDownloadModal } from "@/components/app-download-modal-context";
 
-/* -------------------------------------------------------------------------- */
-/*  Hook do carrossel (autoplay + pausa no hover)                             */
-/* -------------------------------------------------------------------------- */
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function useCarousel(length: number, interval = 6000) {
     const [active, setActive] = useState(0);
@@ -40,7 +45,6 @@ function useCarousel(length: number, interval = 6000) {
         [length],
     );
 
-    // `active` nas deps reinicia o timer quando o usuário troca manualmente
     useEffect(() => {
         if (paused) return;
         const id = setInterval(() => setActive((a) => (a + 1) % length), interval);
@@ -56,9 +60,65 @@ function useCarousel(length: number, interval = 6000) {
     };
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Dados dos carrosséis                                                      */
-/* -------------------------------------------------------------------------- */
+function FitScale({ baseWidth, children }: { baseWidth: number; children: ReactNode }) {
+    const outerRef = useRef<HTMLDivElement>(null);
+    const innerRef = useRef<HTMLDivElement>(null);
+    const [fit, setFit] = useState<{ scale: number; height: number } | null>(null);
+
+    useIsoLayoutEffect(() => {
+        const outer = outerRef.current;
+        const inner = innerRef.current;
+        if (!outer || !inner) return;
+
+        const query = window.matchMedia("(max-width: 767px)");
+
+        const update = () => {
+            if (!query.matches) {
+                setFit(null);
+                return;
+            }
+            const scale = Math.min(1, outer.clientWidth / baseWidth);
+            setFit({ scale, height: inner.offsetHeight * scale });
+        };
+
+        update();
+
+        const observer = new ResizeObserver(update);
+        observer.observe(outer);
+        observer.observe(inner);
+        query.addEventListener("change", update);
+
+        return () => {
+            observer.disconnect();
+            query.removeEventListener("change", update);
+        };
+    }, [baseWidth]);
+
+    return (
+        <div
+            ref={outerRef}
+            style={fit ? { position: "relative", height: fit.height } : undefined}
+        >
+            <div
+                ref={innerRef}
+                style={
+                    fit
+                        ? {
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: baseWidth,
+                              transform: `scale(${fit.scale})`,
+                              transformOrigin: "top left",
+                          }
+                        : undefined
+                }
+            >
+                {children}
+            </div>
+        </div>
+    );
+}
 
 type Feature = { Icon: LucideIcon; label: string };
 
@@ -74,24 +134,18 @@ const jobFeatures: Feature[] = [
     { Icon: FileEdit, label: "Perfil sem Currículo" },
 ];
 
-/* -------------------------------------------------------------------------- */
-/*  Componente principal                                                      */
-/* -------------------------------------------------------------------------- */
-
 export function HowItWorksCombined() {
     const { open } = useAppDownloadModal();
 
     const hire = useCarousel(hireFeatures.length);
     const job = useCarousel(jobFeatures.length);
 
-    // Mesma ordem de `hireFeatures`
     const webScreens = [
         { path: "vaga-com-ia", node: <AiDescriptionScreen /> },
         { path: "cadastro-empresa", node: <CnpjScreen /> },
         { path: "nova-vaga", node: <NewJobScreen /> },
     ];
 
-    // Mesma ordem de `jobFeatures`
     const mobileScreens = [<ProfileTestScreen key="t" />, <CpfSignupScreen key="c" />, <ProfileScreen key="p" />];
 
     return (
@@ -102,17 +156,19 @@ export function HowItWorksCombined() {
                     <div className="decor-ring absolute -right-32 bottom-[8%] h-[440px] w-[440px]" />
                 </div>
 
-                <div className="relative flex flex-col gap-42">
+                <div className="relative flex flex-col gap-42 max-md:gap-28">
                     <div className="grid md:grid-cols-2 md:items-center">
-                        <div className="relative flex justify-center pb-6 md:justify-start ml-10">
+                        <div className="relative flex justify-center pb-6 md:justify-start ml-10 max-md:ml-5">
                             <div className="mockup-wrapper relative w-full">
                                 <div className="mockup-backing absolute -left-5 -top-5 h-full w-full rounded-[24px] bg-ink/70" />
-                                
-                                <div key={hire.active} className="mockup-fade">
-                                    <WebMockup title={webScreens[hire.active].path}>
-                                        {webScreens[hire.active].node}
-                                    </WebMockup>
-                                </div>
+
+                                <FitScale baseWidth={400}>
+                                    <div key={hire.active} className="mockup-fade">
+                                        <WebMockup title={webScreens[hire.active].path}>
+                                            {webScreens[hire.active].node}
+                                        </WebMockup>
+                                    </div>
+                                </FitScale>
 
                                 <div className="notif-card absolute -right-4 top-6 z-20 hidden items-center gap-2 rounded-2xl bg-ink/95 px-6 py-4 shadow-xl sm:flex md:-right-8">
                                     <span className="match-ring relative flex h-10 w-10 items-center justify-center rounded-full bg-icon-badge text-[12px] font-bold text-white">
@@ -161,7 +217,6 @@ export function HowItWorksCombined() {
                         </div>
                     </div>
 
-                    {/* ========================= PROCURA TRABALHO (MOBILE) ========================= */}
                     <div className="grid gap-14 md:grid-cols-2 md:items-center md:gap-20">
                         <div className="order-2 flex flex-col items-center gap-6 md:order-1 md:items-center">
                             <div className="relative flex justify-center pt-8">
@@ -199,11 +254,13 @@ export function HowItWorksCombined() {
                             <div className="mockup-wrapper relative z-10 w-full max-w-[340px]">
                                 <div className="mockup-backing absolute -right-4 -top-4 h-full w-full rounded-[46px] bg-ink/70" />
 
-                                <PhoneShell>
-                                    <div key={job.active} className="mockup-fade h-full">
-                                        {mobileScreens[job.active]}
-                                    </div>
-                                </PhoneShell>
+                                <FitScale baseWidth={340}>
+                                    <PhoneShell>
+                                        <div key={job.active} className="mockup-fade h-full">
+                                            {mobileScreens[job.active]}
+                                        </div>
+                                    </PhoneShell>
+                                </FitScale>
 
                                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
                                     <button
@@ -224,7 +281,7 @@ export function HowItWorksCombined() {
                         alt=""
                         width={2000}
                         height={1000}
-                        className="object-cover w-full h-auto"
+                        className="object-cover w-full h-auto max-md:h-[clamp(220px,62vw,420px)]"
                         priority
                     />
 
@@ -232,22 +289,31 @@ export function HowItWorksCombined() {
                         href="http://descobre.app.br/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-glass-white cta-conhecer flex items-center gap-2 rounded-full shadow-lg"
+                        className="btn-glass-white cta-conhecer flex items-center gap-2 rounded-full shadow-lg max-md:bottom-[6%]! max-md:left-[4%]! max-md:px-4! max-md:py-2.5!"
                     >
                         Quero <span className="font-extrabold"><span className="text-gradient font-extrabold">conhecer</span></span>
                     </a>
 
-                    <button className="btn-glass-white cta-vaga flex items-center gap-2 rounded-full shadow-lg" onClick={open}>
+                    <button
+                        className="btn-glass-white cta-vaga flex items-center gap-2 rounded-full shadow-lg max-md:bottom-[6%]! max-md:left-auto! max-md:right-[4%]! max-md:px-4! max-md:py-2.5!"
+                        onClick={open}
+                    >
                         Quero uma <span className="text-gradient font-extrabold">vaga</span>
                     </button>
                 </div>
 
-                <div className="my-22 flex justify-center text-center">
+                <div className="my-22 flex justify-center text-center max-md:my-14">
                     <p className="text-3xl leading-tight text-paper sm:text-4xl md:text-5xl lg:text-6xl">
                         <span className="block">É para essa conexão que</span>
                         <span className="flex flex-wrap items-center justify-center gap-2">
                             o
-                            <Image src="/icones/DESCOBRE-ICON.svg" alt="" width={350} height={350} />
+                            <Image
+                                src="/icones/DESCOBRE-ICON.svg"
+                                alt=""
+                                width={350}
+                                height={350}
+                                className="max-md:h-auto max-md:w-[min(60vw,240px)]"
+                            />
                             <span className="font-extrabold">existe!</span>
                         </span>
                     </p>
@@ -256,10 +322,6 @@ export function HowItWorksCombined() {
         </section>
     );
 }
-
-/* -------------------------------------------------------------------------- */
-/*  Carrossel de features                                                     */
-/* -------------------------------------------------------------------------- */
 
 function FeatureCarousel({
     features,
@@ -277,7 +339,6 @@ function FeatureCarousel({
     onPause: (paused: boolean) => void;
 }) {
     const n = features.length;
-    // [anterior, ativo, próximo] — o ativo sempre fica no centro
     const order = [(active - 1 + n) % n, active, (active + 1) % n];
 
     return (
@@ -296,10 +357,10 @@ function FeatureCarousel({
                         onClick={() => onSelect(idx)}
                         className={
                             pos === 0
-                                ? "relative z-0 -mr-3 sm:-mr-4"
+                                ? "relative z-0 -mr-3 sm:-mr-4 max-md:hidden"
                                 : pos === 1
                                     ? "relative z-10"
-                                    : "relative z-0 -ml-3 sm:-ml-4"
+                                    : "relative z-0 -ml-3 sm:-ml-4 max-md:hidden"
                         }
                     />
                 ))}
@@ -383,10 +444,6 @@ function FeatureItem({
     );
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Moldura dos mockups                                                       */
-/* -------------------------------------------------------------------------- */
-
 function WebMockup({ title, children }: { title: string; children: ReactNode }) {
     return (
         <div className="mockup-card relative overflow-hidden rounded-[20px] bg-paper shadow-2xl">
@@ -396,7 +453,6 @@ function WebMockup({ title, children }: { title: string; children: ReactNode }) 
                 <span className="h-2.5 w-2.5 rounded-full bg-hairline/40" />
                 <span className="ml-3 text-[14px] font-medium text-paper-dim">{title}</span>
             </div>
-            {/* altura fixa: evita "pulos" de layout ao trocar de tela */}
             <div className="h-[470px] overflow-hidden">{children}</div>
         </div>
     );
@@ -431,10 +487,6 @@ function PhoneShell({ children }: { children: ReactNode }) {
         </div>
     );
 }
-
-/* -------------------------------------------------------------------------- */
-/*  Telas WEB                                                                 */
-/* -------------------------------------------------------------------------- */
 
 function Field({ label, value, placeholder }: { label: string; value?: string; placeholder?: string }) {
     return (
@@ -587,7 +639,6 @@ function AiDescriptionScreen() {
     );
 }
 
-/** Cadastro pelo CNPJ */
 function CnpjScreen() {
     return (
         <div className="space-y-3 p-4">
@@ -729,7 +780,6 @@ function CpfSignupScreen() {
             <MobileHeader title="Crie seu perfil" subtitle="Leva menos de 1 minuto" />
 
             <div className="flex-1 space-y-3 px-5 pt-4">
-                {/* Etapas */}
                 <div>
                     <div className="mb-1.5 flex items-center justify-between text-[10px]">
                         <span className="font-semibold text-ink">Etapa 1 de 3</span>
@@ -742,7 +792,6 @@ function CpfSignupScreen() {
                     </div>
                 </div>
 
-                {/* CPF verificado */}
                 <div className="space-y-1.5">
                     <MobileField label="CPF" value="123.456.789-00" Icon={IdCard} valid />
                     <p className="flex items-center gap-1 text-[9px] font-medium text-green-600">
@@ -759,7 +808,6 @@ function CpfSignupScreen() {
 
                 <MobileField label="E-mail" value="marina@email.com" Icon={Mail} valid />
 
-                {/* Termos */}
                 <div className="flex items-start gap-2 pt-0.5">
                     <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded bg-flare">
                         <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />

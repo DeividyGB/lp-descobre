@@ -258,6 +258,24 @@ body {
   }
 }
 
+@media (max-width: 767px) {
+  .hero-mockup-wrap {
+    min-height: clamp(280px, 78vw, 460px);
+  }
+
+  .hero-gradient-card {
+    border-radius: 40px 40px 0 0;
+  }
+
+  .hero-section-image-pc-mobile {
+    width: clamp(280px, 100cqw, 560px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-inline: auto;
+  }
+}
+
 .coworkers-image {
   z-index: 20;
   position: absolute;

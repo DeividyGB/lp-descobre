@@ -27,27 +27,28 @@ export function HowItWorks() {
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6">
+    <section className="px-4 py-12 sm:px-6 sm:py-20">
       <div className="mx-auto max-w-[1400px]">
         <div
           ref={sectionRef}
           className="relative overflow-hidden rounded-[32px] border border-hairline/60 bg-surface"
         >
-           <Image
-              src="/imagens/image-coworkes.svg"
-              alt=""
-              width={1200}
-              height={600}
-              className="coworkers-image object-cover"
-              priority
-            />
+          <Image
+            src="/imagens/image-coworkes.svg"
+            alt=""
+            width={1200}
+            height={600}
+            className="coworkers-image object-cover max-md:static! max-md:inset-auto! max-md:h-[clamp(200px,58vw,320px)]! max-md:w-full!"
+            priority
+          />
 
-          <div className="relative z-10 flex w-full flex-col items-end justify-center gap-8 px-8 py-10 md:ml-[38%] mmin-h-[450px] md:w-[62%] md:gap-12 md:px-12 md:py-14">
+          <div className="relative z-10 flex w-full flex-col items-end justify-center gap-6 px-6 py-8 sm:px-8 md:ml-[38%] mmin-h-[450px] md:w-[62%] md:gap-12 md:px-12 md:py-14">
             <h1
-              className={`flex flex-wrap items-center justify-end text-right text-[clamp(1.5rem,4vw,12rem)] !font-extrabold !leading-[0.95] !text-paper transition-all duration-700 ease-out ${isVisible
-                ? "translate-y-0 opacity-100 delay-[250ms]"
-                : "translate-y-4 opacity-0"
-                }`}
+              className={`flex flex-wrap items-center justify-end text-right text-[clamp(1.5rem,4vw,12rem)] max-md:text-[clamp(1.75rem,8vw,2.5rem)] !font-extrabold !leading-[0.95] !text-paper transition-all duration-700 ease-out ${
+                isVisible
+                  ? "translate-y-0 opacity-100 delay-[250ms]"
+                  : "translate-y-4 opacity-0"
+              }`}
             >
               <span>Aqui no</span>
               <span className="relative inline-flex">
@@ -60,16 +61,18 @@ export function HowItWorks() {
                   alt=""
                   width={400}
                   height={400}
+                  className="max-md:h-auto max-md:w-[min(56vw,220px)]"
                 />
               </span>
               <span>é simples!</span>
             </h1>
 
             <div
-              className={`bg-flare px-8 py-4 transition-all duration-700 ease-out md:-mx-12 md:px-12 ${isVisible
-                ? "translate-y-0 opacity-100 delay-[400ms]"
-                : "translate-y-4 opacity-0"
-                }`}
+              className={`bg-flare px-6 py-4 transition-all duration-700 ease-out max-sm:-mx-6 sm:max-md:-mx-8 max-md:self-stretch sm:px-8 md:-mx-12 md:px-12 ${
+                isVisible
+                  ? "translate-y-0 opacity-100 delay-[400ms]"
+                  : "translate-y-4 opacity-0"
+              }`}
             >
               <p className="text-right text-base text-white sm:text-lg">
                 Você não precisa entender de{" "}
@@ -79,10 +82,14 @@ export function HowItWorks() {
               </p>
             </div>
 
-            <Button size="lg" className={`btn-company rounded-full cursor-pointer transition-all duration-700 ease-out ${isVisible
-              ? "translate-y-0 opacity-100 delay-[550ms]"
-              : "translate-y-4 opacity-0"
-              }`}>
+            <Button
+              size="lg"
+              className={`btn-company cursor-pointer rounded-full transition-all duration-700 ease-out ${
+                isVisible
+                  ? "translate-y-0 opacity-100 delay-[550ms]"
+                  : "translate-y-4 opacity-0"
+              }`}
+            >
               <a
                 href="http://descobre.app.br/"
                 target="_blank"
@@ -90,7 +97,6 @@ export function HowItWorks() {
               >
                 Eu quero
               </a>
-
             </Button>
           </div>
         </div>

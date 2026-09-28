@@ -72,7 +72,6 @@ const DEFAULT_HEADING_HIGHLIGHT = "está aqui.";
 const DEFAULT_CTA_LABEL = "Eu quero!";
 const FOCUS_THRESHOLD = 0.65;
 
-
 export function truncateText(text: string, maxLength?: number) {
   if (!maxLength || text.length <= maxLength) return text;
   return `${text.slice(0, maxLength - 1).trimEnd()}…`;
@@ -118,7 +117,7 @@ function ReviewCard({ review, quoteMaxLength }: ReviewCardProps) {
   return (
     <li
       data-review-id={review.id}
-      className="card-glass flex w-[380px] shrink-0 items-center gap-4 overflow-hidden rounded-[28px] p-4 will-change-[filter,opacity,transform] sm:w-[480px] sm:gap-5 sm:p-5"
+      className="card-glass flex w-[380px] shrink-0 items-center gap-4 overflow-hidden rounded-[28px] p-4 will-change-[filter,opacity,transform] max-sm:w-[min(320px,84vw)] sm:w-[480px] sm:gap-5 sm:p-5"
     >
       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 sm:h-20 sm:w-20">
         {imageFailed ? (
@@ -139,7 +138,7 @@ function ReviewCard({ review, quoteMaxLength }: ReviewCardProps) {
 
       <div className="flex min-w-0 flex-1 flex-col justify-center gap-2 text-left">
         <StarRating rating={review.rating} />
-        <p className="text-lg leading-snug text-white/90">{displayQuote}</p>
+        <p className="text-lg leading-snug text-white/90 max-sm:text-base">{displayQuote}</p>
       </div>
     </li>
   );
@@ -235,7 +234,7 @@ export function ReviewsSection({
   const displayCtaLabel = truncateText(ctaLabel, ctaMaxLength);
 
   return (
-    <section className="relative overflow-hidden border-b border-hairline/60 bg-[#0b0908] py-52 text-white">
+    <section className="relative overflow-hidden border-b border-hairline/60 bg-[#0b0908] py-52 text-white max-md:py-28">
       <div
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
         aria-hidden="true"
@@ -245,7 +244,7 @@ export function ReviewsSection({
           alt=""
           width={1200}
           height={1200}
-          className="max-w-none"
+          className="max-w-none max-md:h-auto max-md:w-[760px]"
           priority={false}
         />
       </div>
@@ -289,12 +288,12 @@ export function ReviewsSection({
           </ul>
         </div>
 
-        <div className="mt-28 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button size="lg" className="btn-candidate gap-0 h-16" onClick={open}>
+        <div className="mt-28 flex flex-col items-center justify-center gap-4 max-md:mt-16 max-sm:w-full max-sm:max-w-sm sm:flex-row">
+          <Button size="lg" className="btn-candidate gap-0 h-16 max-sm:w-full" onClick={open}>
             Quero<span className="ml-1 font-extrabold">TRABALHAR</span>
           </Button>
 
-          <Button size="lg" variant="outline" className="btn-company gap-0 h-16">
+          <Button size="lg" variant="outline" className="btn-company gap-0 h-16 max-sm:w-full">
             <a href="http://descobre.app.br/" target="_blank" rel="noopener noreferrer">
               Quero<span className="ml-1 font-extrabold">CONTRATAR</span>
             </a>

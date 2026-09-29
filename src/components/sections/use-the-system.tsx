@@ -29,6 +29,10 @@ import {
     ShieldCheck,
     Lock,
     Check,
+    MapPin,
+    TrendingUp,
+    Briefcase,
+    Star,
 } from "lucide-react";
 import { WifiHigh, CellSignalFull, BatteryFull, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -104,13 +108,13 @@ function FitScale({ baseWidth, children }: { baseWidth: number; children: ReactN
                 style={
                     fit
                         ? {
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              width: baseWidth,
-                              transform: `scale(${fit.scale})`,
-                              transformOrigin: "top left",
-                          }
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: baseWidth,
+                            transform: `scale(${fit.scale})`,
+                            transformOrigin: "top left",
+                        }
                         : undefined
                 }
             >
@@ -193,7 +197,7 @@ export function HowItWorksCombined() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-center gap-6 md:items-center">
+                        <div className="flex flex-col items-center gap-6 md:items-center max-md:mt-15">
                             <div className="relative flex justify-center pt-8">
                                 <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
                                     <Building2 className="h-12 w-12 text-white" />
@@ -835,41 +839,55 @@ function ProfileScreen() {
     return (
         <div className="flex h-full flex-col">
             <MobileHeader title="Meu perfil" subtitle="Sem currículo, sem complicação" />
-            <div className="flex-1 space-y-4 px-5 py-5">
-                <div className="flex items-center gap-3">
+
+            <div className="flex-1 space-y-3 overflow-y-auto px-2 pt-4">
+                <div className="flex items-center gap-3 rounded-xl border border-hairline/20 bg-white p-3 shadow-sm">
                     <span className="relative h-14 w-14 shrink-0">
                         <span className="relative block h-full w-full overflow-hidden rounded-full border-[3px] border-white bg-[linear-gradient(135deg,#FA8E12,#DC4D00)] shadow-md ring-2 ring-flare/40">
                             <Image
                                 src="/imagens/woman-smiling.png"
-                                alt="Marina Souza"
+                                alt="Ana Ferreira"
                                 fill
                                 sizes="56px"
                                 className="object-cover"
                             />
                         </span>
-                        <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
+                        <span className="absolute bottom-0 right-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-green-500">
+                            <Check className="h-2 w-2 text-white" strokeWidth={4} />
+                        </span>
                     </span>
 
-                    <div className="leading-tight">
-                        <p className="text-[13px] font-semibold text-ink">Marina Souza</p>
-                        <p className="text-[10px] text-paper-dim">Analista de RH · São Paulo</p>
+                    <div className="min-w-0 flex-1 leading-tight">
+                        <p className="truncate text-[13px] font-semibold text-ink">Ana Ferreira</p>
+                        <p className="flex items-center gap-1 text-[10px] text-paper-dim">
+                            <Briefcase className="h-2.5 w-2.5" /> Auxiliar de Produção
+                        </p>
+                        <p className="flex items-center gap-1 text-[10px] text-paper-dim">
+                            <MapPin className="h-2.5 w-2.5" /> Campinas, SP
+                        </p>
                     </div>
                 </div>
 
-                <div>
-                    <div className="mb-1 flex justify-between text-[10px] text-paper-dim">
-                        <span>Perfil completo</span>
-                        <span className="font-semibold text-ink">85%</span>
+                <div className="rounded-xl border border-hairline/20 bg-white p-3 shadow-sm">
+                    <div className="mb-1.5 flex items-center justify-between text-[10px]">
+                        <span className="flex items-center gap-1 font-semibold text-ink">
+                            <Sparkles className="h-3 w-3 text-flare" /> Perfil completo
+                        </span>
+                        <span className="font-bold text-flare">85%</span>
                     </div>
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-hairline/30">
                         <div className="h-full rounded-full bg-flare" style={{ width: "85%" }} />
                     </div>
+                    <p className="mt-1.5 text-[9px] text-paper-dim">Adicione uma experiência para chegar a 100%</p>
                 </div>
 
-                <div>
-                    <p className="mb-1.5 text-[11px] font-semibold text-ink">Perfil comportamental</p>
+                {/* Perfil comportamental */}
+                <div className="rounded-xl border border-hairline/20 bg-white p-3 shadow-sm">
+                    <p className="mb-2 flex items-center gap-1 text-[11px] font-semibold text-ink">
+                        <Star className="h-3 w-3 text-flare" /> Perfil comportamental
+                    </p>
                     <div className="flex flex-wrap gap-1.5">
-                        {["Comunicativa", "Organizada", "Colaborativa"].map((t) => (
+                        {["Pontual", "Dedicada", "Trabalha bem em equipe"].map((t) => (
                             <span key={t} className="rounded-full bg-flare/10 px-2.5 py-1 text-[10px] font-medium text-flare">
                                 {t}
                             </span>
@@ -877,10 +895,13 @@ function ProfileScreen() {
                     </div>
                 </div>
 
-                <div>
-                    <p className="mb-1.5 text-[11px] font-semibold text-ink">Habilidades</p>
+                {/* Experiência */}
+                <div className="rounded-xl border border-hairline/20 bg-white p-3 shadow-sm">
+                    <p className="mb-2 flex items-center gap-1 text-[11px] font-semibold text-ink">
+                        <Briefcase className="h-3 w-3 text-flare" /> Experiência
+                    </p>
                     <div className="flex flex-wrap gap-1.5">
-                        {["CLT", "Recrutamento", "Excel", "Atendimento"].map((t) => (
+                        {["Linha de produção", "Embalagem", "Controle de qualidade", "Disponível p/ turnos"].map((t) => (
                             <span key={t} className="rounded-full bg-hairline/15 px-2.5 py-1 text-[10px] font-medium text-paper-dim">
                                 {t}
                             </span>
@@ -888,9 +909,29 @@ function ProfileScreen() {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between rounded-xl bg-white p-3 shadow-md">
-                    <span className="text-[11px] text-paper-dim">Vagas compatíveis</span>
-                    <span className="text-[13px] font-bold text-flare">8 novas</span>
+                <div className="rounded-xl border border-flare/25 bg-flare/5 p-3">
+                    <div className="mb-2 flex items-center justify-between">
+                        <span className="flex items-center gap-1 text-[11px] font-semibold text-ink">
+                            <TrendingUp className="h-3 w-3 text-flare" /> Vagas compatíveis
+                        </span>
+                        <span className="rounded-full bg-flare px-2 py-0.5 text-[10px] font-bold text-white">8 novas</span>
+                    </div>
+                    <div className="space-y-1.5">
+                        <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-2 shadow-sm">
+                            <div className="min-w-0">
+                                <p className="truncate text-[10px] font-semibold text-ink">Auxiliar de Produção</p>
+                                <p className="text-[9px] text-paper-dim">NovaPack Indústria · R$ 2.350,00</p>
+                            </div>
+                            <span className="shrink-0 text-[10px] font-bold text-flare">96%</span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-2 shadow-sm">
+                            <div className="min-w-0">
+                                <p className="truncate text-[10px] font-semibold text-ink">Auxiliar de Logística</p>
+                                <p className="text-[9px] text-paper-dim">Rota Sul Distribuidora · R$ 2.400,00</p>
+                            </div>
+                            <span className="shrink-0 text-[10px] font-bold text-flare">89%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

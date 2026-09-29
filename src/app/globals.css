@@ -64,7 +64,7 @@ html {
   scroll-behavior: smooth;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
@@ -268,11 +268,9 @@ body {
   }
 
   .hero-section-image-pc-mobile {
-    width: clamp(280px, 100cqw, 560px);
-    left: 0;
+    bottom: -50px;
+    left: -55px;
     right: 0;
-    bottom: 0;
-    margin-inline: auto;
   }
 }
 
@@ -754,7 +752,7 @@ body {
 .final-cta-logo {
   width: clamp(260px, 4cqw, 48px);
   height: auto;
-  margin-left: -33px;
+  margin-left: -25px;
 }
 
 .final-cta-heading {
@@ -773,7 +771,7 @@ body {
   height: auto;
   position: absolute;
   top: 46%;
-  right: -4%;
+  left: 25%;
   transform: translateY(-50%);
 }
 
@@ -816,8 +814,13 @@ body {
 }
 
 @keyframes app-modal-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes app-modal-pop-in {
@@ -825,6 +828,7 @@ body {
     opacity: 0;
     transform: scale(0.94) translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -840,7 +844,68 @@ body {
 }
 
 @keyframes mockupFade {
-  from { opacity: 0; transform: translateY(8px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
-.mockup-fade { animation: mockupFade 0.45s ease both; }
+
+.mockup-fade {
+  animation: mockupFade 0.45s ease both;
+}
+
+@keyframes final-cta-float {
+
+  0%,
+  100% {
+    transform: rotate(-6deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-6deg) translateY(-18px);
+  }
+}
+
+.final-cta-float {
+  animation: final-cta-float 5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes float-badge-1 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-badge-1 {
+  animation: float-badge-1 4s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+@keyframes float-badge-2 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.float-badge-2 {
+  animation: float-badge-2 4.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}

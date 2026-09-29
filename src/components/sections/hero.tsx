@@ -55,7 +55,7 @@ export function Hero() {
             alt=""
             width={900}
             height={600}
-            className="hero-section-image-pc-mobile animate-[hero-fade-up_0.9s_ease-out_0.35s_both] max-md:right-0! max-md:bottom-0! max-md:left-0! max-md:mx-auto! max-md:w-[min(100%,34rem)]! md:animate-[hero-slide-in-right_0.9s_ease-out_0.35s_both]"
+            className="hero-section-image-pc-mobile animate-[hero-fade-up_0.9s_ease-out_0.35s_both] max-md:mx-auto! max-md:w-[min(130%,34rem)]! md:animate-[hero-slide-in-right_0.9s_ease-out_0.35s_both]"
             priority
           />
         </div>

@@ -48,7 +48,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-        
+
         <div className="hero-mockup-wrap relative w-full max-md:flex! max-md:min-h-[clamp(300px,85vw,500px)]! max-md:items-center! max-md:justify-center! max-md:overflow-x-clip md:w-[40%] md:overflow-visible lg:w-[38%] xl:w-[30%]">
           <div className="hero-gradient-card absolute inset-0 animate-[hero-fade-up_0.9s_ease-out_0.2s_both] max-md:absolute! max-md:inset-0! max-md:h-full! max-md:w-full! max-md:rounded-[40px_40px_0_0]! md:animate-[hero-slide-in-right_0.9s_ease-out_0.2s_both]" />
 
@@ -57,7 +57,8 @@ export function Hero() {
             alt=""
             width={900}
             height={600}
-            sizes="(max-width: 767px) 125vw, (max-width: 1279px) 40vw, 30vw"
+            quality={100}
+            sizes="(max-width: 767px) 125vw, 60vw"
             className="hero-section-image-pc-mobile animate-[hero-fade-up_0.9s_ease-out_0.35s_both] max-md:relative! max-md:z-10 max-md:m-0! max-md:h-auto! max-md:w-[min(125vw,44rem)]! max-md:max-w-none! max-md:shrink-0! md:animate-[hero-slide-in-right_0.9s_ease-out_0.35s_both]"
             priority
           />

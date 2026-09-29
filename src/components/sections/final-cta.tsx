@@ -135,9 +135,8 @@ function CandidacyRow({ item, index }: { item: Candidacy; index: number }) {
         ) : (
           <span
             aria-label={item.company}
-            className={`flex h-full w-full items-center justify-center font-bold ${T.small} ${
-              AVATAR_TONES[index % AVATAR_TONES.length]
-            }`}
+            className={`flex h-full w-full items-center justify-center font-bold ${T.small} ${AVATAR_TONES[index % AVATAR_TONES.length]
+              }`}
           >
             {initials(item.company)}
           </span>
@@ -167,16 +166,17 @@ function FinalCtaPhoneMockup() {
   const count = (s: Status) => CANDIDACIES.filter((c) => c.status === s).length;
 
   return (
-    <div className="final-cta-float relative max-md:h-full md:w-[290px] lg:w-[400px]">
+    <div className="final-cta-float relative max-md:h-full md:w-[270px] lg:w-[300px] xl:w-[400px]">
+
       {/* Corpo do celular: a proporção manda; no mobile a altura é do pai e a largura sai dela */}
-      <div className="relative aspect-[9/19] rounded-[34px] bg-ink p-2 shadow-2xl max-md:h-full md:aspect-[9/18] md:rounded-[42px] md:p-2.5 lg:aspect-[9/19] lg:rounded-[54px] lg:p-3">
+      <div className="relative aspect-[9/19] rounded-[34px] bg-ink p-2 shadow-2xl max-md:h-full md:aspect-[9/18] md:rounded-[42px] md:p-2.5 lg:aspect-[9/19] lg:rounded-[46px] lg:p-2.5 xl:rounded-[54px] xl:p-3">
         {/* Botões laterais (posição em %, acompanha a altura) */}
         <span className="absolute -left-[3px] top-[14%] h-[4%] w-[3px] rounded-l bg-ink/80" />
         <span className="absolute -left-[3px] top-[20%] h-[7%] w-[3px] rounded-l bg-ink/80" />
         <span className="absolute -left-[3px] top-[29%] h-[7%] w-[3px] rounded-l bg-ink/80" />
         <span className="absolute -right-[3px] top-[23%] h-[8%] w-[3px] rounded-r bg-ink/80" />
 
-        <div className="@container relative flex h-full flex-col overflow-hidden rounded-[26px] bg-paper md:rounded-[32px] lg:rounded-[42px]">
+        <div className="@container relative flex h-full flex-col overflow-hidden rounded-[26px] bg-paper md:rounded-[32px] lg:rounded-[36px] xl:rounded-[42px]">
           <div className="absolute left-1/2 top-[2.4cqw] z-20 h-[6.4cqw] w-[26cqw] -translate-x-1/2 rounded-full bg-ink" />
 
           <div
@@ -280,10 +280,10 @@ function FinalCtaPhoneMockup() {
       </div>
 
       {/* Balões flutuantes */}
-      <div className="float-badge-1 absolute -right-3 top-[38%] whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold text-ink shadow-xl sm:-right-10 sm:px-5 sm:py-3 sm:text-[13px]">
+      <div className="float-badge-1 absolute -right-3 top-[38%] whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold text-ink shadow-xl sm:-right-6 sm:px-5 sm:py-3 sm:text-[13px] lg:-right-6 lg:px-4 lg:py-2.5 lg:text-[12px] xl:-right-10 xl:px-5 xl:py-3 xl:text-[13px]">
         Empresas <span className="font-extrabold text-flare">via Web</span>
       </div>
-      <div className="float-badge-2 absolute -right-1 top-[52%] whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold text-ink shadow-xl sm:-right-4 sm:px-5 sm:py-3 sm:text-[13px]">
+      <div className="float-badge-2 absolute -right-1 top-[52%] whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[11px] font-semibold text-ink shadow-xl sm:-right-3 sm:px-5 sm:py-3 sm:text-[13px] lg:-right-3 lg:px-4 lg:py-2.5 lg:text-[12px] xl:-right-4 xl:px-5 xl:py-3 xl:text-[13px]">
         Candidatos <span className="font-extrabold text-flare">via App</span>
       </div>
     </div>

@@ -11,9 +11,9 @@ export function Audiences() {
 
     return (
         <section className="relative z-10 -mt-8 rounded-t-[28px] border-b border-hairline/60 bg-ink pt-14 max-md:overflow-x-clip sm:-mt-12 sm:pt-20" id="empresas">
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 max-md:pb-16 md:flex-row md:items-center md:justify-center md:gap-6">
+            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 pb-24 max-md:pb-16 md:flex-row md:items-center md:justify-center md:gap-4 md:px-6 lg:gap-6 lg:px-8">
                 <div
-                    className={`w-full min-w-[500px] max-md:min-w-0 animate-hero-fade-up ${isCandidato ? "md:order-1" : "md:order-3"
+                    className={`w-full min-w-0 animate-hero-fade-up md:w-auto md:flex-[1.15_1_0%] xl:min-w-[500px] ${isCandidato ? "md:order-1" : "md:order-3"
                         }`}
                 >
                     <div className="grid">
@@ -58,7 +58,7 @@ export function Audiences() {
 
                 <div
                     key={`switch-card-${audience}`}
-                    className={`w-full max-w-lg min-w-[450px] max-md:min-w-0 animate-hero-fade-up ${isCandidato ? "md:order-3" : "md:order-1"
+                    className={`w-full min-w-0 max-w-lg animate-hero-fade-up md:w-auto md:flex-[1_1_0%] xl:min-w-[450px] ${isCandidato ? "md:order-3" : "md:order-1"
                         }`}
                 >
                     {isCandidato ? (
@@ -195,10 +195,10 @@ function SwitchCard({
 }) {
     return (
         <div className="card-glass audience-switch-card flex flex-col items-center justify-center gap-6 rounded-[28px] text-center max-md:aspect-auto!">
-            <p className="audience-switch-title leading-tight text-paper max-md:text-[clamp(2rem,11cqw,3rem)]!">{title}</p>
+            <p className="audience-switch-title leading-tight text-paper max-md:text-[clamp(2rem,11cqw,3rem)]! md:text-[clamp(1.75rem,3.6vw,2.5rem)]! xl:text-[clamp(2.5rem,4vw,3.5rem)]!">{title}</p>
             <button
                 onClick={onClick}
-                className="btn-glass-white audience-switch-btn rounded-[32px] max-md:text-[clamp(1rem,5cqw,1.3rem)]!"
+                className="btn-glass-white audience-switch-btn rounded-[32px] max-md:text-[clamp(1rem,5cqw,1.3rem)]! md:text-[clamp(0.95rem,1.6vw,1.1rem)]! xl:text-[1.25rem]!"
             >
                 {buttonLabel}
             </button>

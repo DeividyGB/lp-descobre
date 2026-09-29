@@ -154,15 +154,15 @@ export function HowItWorksCombined() {
 
     return (
         <section id="como-funciona">
-            <div className="relative overflow-hidden rounded-t-[32px] bg-orange-card px-5 pt-16 pb-16 sm:px-8 md:px-16">
+            <div className="relative overflow-hidden rounded-t-[32px] bg-orange-card px-5 pt-16 pb-16 sm:px-8 md:px-10 lg:px-12 xl:px-16">
                 <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
                     <div className="decor-ring absolute -left-32 top-[15%] h-[440px] w-[440px]" />
                     <div className="decor-ring absolute -right-32 bottom-[8%] h-[440px] w-[440px]" />
                 </div>
 
                 <div className="relative flex flex-col gap-42 max-md:gap-28">
-                    <div className="grid md:grid-cols-2 md:items-center">
-                        <div className="relative flex justify-center pb-6 md:justify-start ml-10 max-md:ml-5">
+                    <div className="grid md:grid-cols-2 md:items-center md:gap-8 xl:gap-0">
+                        <div className="relative flex justify-center pb-6 ml-6 md:justify-start xl:ml-10 max-md:ml-5">
                             <div className="mockup-wrapper relative w-full">
                                 <div className="mockup-backing absolute -left-5 -top-5 h-full w-full rounded-[24px] bg-ink/70" />
 
@@ -174,7 +174,7 @@ export function HowItWorksCombined() {
                                     </div>
                                 </FitScale>
 
-                                <div className="notif-card absolute -right-4 top-6 z-20 hidden items-center gap-2 rounded-2xl bg-ink/95 px-6 py-4 shadow-xl sm:flex md:-right-8">
+                                <div className="notif-card absolute -right-4 top-6 z-20 hidden items-center gap-2 rounded-2xl bg-ink/95 px-6 py-4 shadow-xl sm:flex md:-right-4 xl:-right-8">
                                     <span className="match-ring relative flex h-10 w-10 items-center justify-center rounded-full bg-icon-badge text-[12px] font-bold text-white">
                                         98%
                                     </span>
@@ -202,8 +202,8 @@ export function HowItWorksCombined() {
                                 <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
                                     <Building2 className="h-12 w-12 text-white" />
                                 </span>
-                                <div className="w-full max-w-md rounded-[24px] px-8 pb-12 pt-16 text-center card-contratar sm:px-14">
-                                    <p className="text-[26px] leading-tight text-paper sm:text-[30px] md:text-[36px]">
+                                <div className="w-full max-w-md rounded-[24px] px-8 pb-12 pt-16 text-center card-contratar sm:px-10 xl:px-14">
+                                    <p className="text-[26px] leading-tight text-paper sm:text-[30px] xl:text-[36px]">
                                         <span className="block">Para quem</span>
                                         <span className="block">precisa <span className="font-extrabold">contratar</span>.</span>
                                     </p>
@@ -221,7 +221,7 @@ export function HowItWorksCombined() {
                         </div>
                     </div>
 
-                    <div className="grid gap-14 md:grid-cols-2 md:items-center md:gap-20">
+                    <div className="grid gap-14 md:grid-cols-2 md:items-center md:gap-10 xl:gap-20">
                         <div className="order-2 flex flex-col items-center gap-6 md:order-1 md:items-center">
                             <div className="relative flex justify-center pt-8">
                                 <span className="absolute left-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-icon-badge shadow-lg">
@@ -249,9 +249,11 @@ export function HowItWorksCombined() {
                             <Image
                                 src="/imagens/background-mobile.png"
                                 alt=""
+                                aria-hidden
                                 width={600}
                                 height={500}
-                                className="background-mobile-icon"
+                                sizes="(max-width: 767px) 90vw, (max-width: 1279px) 42vw, 520px"
+                                className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-auto w-[min(90vw,420px)] max-w-none -translate-x-1/2 -translate-y-1/2 select-none md:w-[clamp(320px,42vw,440px)] xl:w-[520px]"
                                 priority
                             />
 
@@ -279,7 +281,7 @@ export function HowItWorksCombined() {
                     </div>
                 </div>
 
-                <div className="hero-photo-wrap relative -mx-5 py-4 sm:-mx-8 md:-mx-16">
+                <div className="hero-photo-wrap relative -mx-5 py-4 sm:-mx-8 md:-mx-10 lg:-mx-12 xl:-mx-16">
                     <Image
                         src="/imagens/man-woman-working.jpeg"
                         alt=""
@@ -307,8 +309,7 @@ export function HowItWorksCombined() {
                 </div>
 
                 <div className="my-22 flex justify-center text-center max-md:my-14">
-                    <p className="text-3xl leading-tight text-paper sm:text-4xl md:text-5xl lg:text-6xl">
-                        <span className="block">É para essa conexão que</span>
+                    <p className="text-3xl leading-tight text-paper sm:text-4xl md:text-5xl xl:text-6xl">                        <span className="block">É para essa conexão que</span>
                         <span className="flex flex-wrap items-center justify-center gap-2">
                             o
                             <Image
@@ -361,10 +362,10 @@ function FeatureCarousel({
                         onClick={() => onSelect(idx)}
                         className={
                             pos === 0
-                                ? "relative z-0 -mr-3 sm:-mr-4 max-md:hidden"
+                                ? "relative z-0 -mr-3 sm:-mr-4 max-xl:hidden"
                                 : pos === 1
                                     ? "relative z-10"
-                                    : "relative z-0 -ml-3 sm:-ml-4 max-md:hidden"
+                                    : "relative z-0 -ml-3 sm:-ml-4 max-xl:hidden"
                         }
                     />
                 ))}

@@ -52,9 +52,9 @@ function renderWithBold(text: string): ReactNode[] {
 
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
-    <li className="bg-orange-card-features relative flex flex-col items-center gap-6 overflow-hidden rounded-[28px] p-14 text-center shadow-[0_25px_50px_-12px_rgba(0,0,0,0.45)] max-md:flex-row max-md:gap-4 max-md:rounded-[24px] max-md:p-4 max-md:text-left">
+    <li className="bg-orange-card-features relative flex flex-col items-center gap-6 overflow-hidden rounded-[28px] p-14 text-center shadow-[0_25px_50px_-12px_rgba(0,0,0,0.45)] max-md:flex-row max-md:gap-4 max-md:rounded-[24px] max-md:p-4 max-md:text-left lg:max-xl:gap-4 lg:max-xl:rounded-[22px] lg:max-xl:p-5">
       <div
-        className="btn-glass-white flex h-[200px] w-[240px] shrink-0 items-center justify-center rounded-3xl max-md:h-[88px] max-md:w-[88px] max-md:rounded-2xl"
+        className="btn-glass-white flex h-[200px] w-[240px] shrink-0 items-center justify-center rounded-3xl max-md:h-[88px] max-md:w-[88px] max-md:rounded-2xl lg:max-xl:h-[120px] lg:max-xl:w-full lg:max-xl:rounded-2xl"
         style={{ backgroundColor: "#f8a14c" }}
       >
         <Image
@@ -62,12 +62,11 @@ function FeatureCard({ feature }: { feature: Feature }) {
           alt=""
           width={150}
           height={150}
-          className="h-[150px] w-[150px] object-contain max-md:h-[60px] max-md:w-[60px]"
+          className="h-[150px] w-[150px] object-contain max-md:h-[60px] max-md:w-[60px] lg:max-xl:h-[80px] lg:max-xl:w-[80px]"
         />
       </div>
 
-      <p className="text-[1.8rem] leading-snug text-white max-md:text-[1.15rem]">
-        {renderWithBold(feature.text)}
+      <p className="text-[1.8rem] leading-snug text-white max-md:text-[1.15rem] lg:max-xl:text-[1.1rem]">        {renderWithBold(feature.text)}
       </p>
     </li>
   );
@@ -91,10 +90,9 @@ export function FeaturesSection({
           aria-hidden="true"
         />
 
-        <ul className="relative z-10 grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6">
-          {items.map((feature) => (
-            <FeatureCard key={feature.id} feature={feature} />
-          ))}
+        <ul className="relative z-10 grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6 lg:max-xl:gap-4">          {items.map((feature) => (
+          <FeatureCard key={feature.id} feature={feature} />
+        ))}
         </ul>
       </div>
     </section>

@@ -8,7 +8,9 @@ export function Hero() {
   const { open } = useAppDownloadModal();
 
   return (
-    <section className="relative w-full">
+    // overflow-x-clip: corta o que passar da largura da tela SEM criar scroll container
+    // (o eixo Y continua visível, então a imagem ainda pode "vazar" pra cima/baixo)
+    <section className="relative w-full overflow-x-clip">
       <div className="flex w-full flex-col md:flex-row">
         <div className="flex w-full items-center justify-center px-6 py-12 sm:py-16 md:w-[70%] md:px-12 md:py-28 lg:px-20">
           <div className="w-full max-w-4xl">
@@ -47,7 +49,13 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="hero-mockup-wrap relative w-full overflow-visible max-md:min-h-[clamp(280px,78vw,460px)]! md:w-[30%]">
+        {/*
+          Mobile: o wrapper vira flex centralizado e corta só o eixo X.
+          A imagem pode ser MAIOR que a tela (max-w-none) e, como o pai
+          usa justify-center, ela sobra igualmente dos dois lados e é cortada
+          na borda da tela em vez de gerar scroll horizontal.
+        */}
+        <div className="hero-mockup-wrap relative w-full max-md:flex! max-md:min-h-[clamp(300px,85vw,500px)]! max-md:items-center! max-md:justify-center! max-md:overflow-x-clip md:w-[30%] md:overflow-visible">
           <div className="hero-gradient-card absolute inset-0 animate-[hero-fade-up_0.9s_ease-out_0.2s_both] max-md:absolute! max-md:inset-0! max-md:h-full! max-md:w-full! max-md:rounded-[40px_40px_0_0]! md:animate-[hero-slide-in-right_0.9s_ease-out_0.2s_both]" />
 
           <Image
@@ -55,7 +63,8 @@ export function Hero() {
             alt=""
             width={900}
             height={600}
-            className="hero-section-image-pc-mobile animate-[hero-fade-up_0.9s_ease-out_0.35s_both] max-md:mx-auto! max-md:w-[min(130%,34rem)]! md:animate-[hero-slide-in-right_0.9s_ease-out_0.35s_both]"
+            sizes="(max-width: 767px) 125vw, 30vw"
+            className="hero-section-image-pc-mobile animate-[hero-fade-up_0.9s_ease-out_0.35s_both] max-md:relative! max-md:z-10 max-md:m-0! max-md:h-auto! max-md:w-[min(125vw,44rem)]! max-md:max-w-none! max-md:shrink-0! md:animate-[hero-slide-in-right_0.9s_ease-out_0.35s_both]"
             priority
           />
         </div>

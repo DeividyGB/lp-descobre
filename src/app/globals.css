@@ -268,8 +268,8 @@ body {
   }
 
   .hero-section-image-pc-mobile {
-    bottom: -50px;
-    left: -55px;
+    bottom: 0px;
+    left: 0px;
     right: 0;
   }
 }

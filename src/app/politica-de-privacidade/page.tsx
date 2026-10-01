@@ -116,8 +116,8 @@ export default function PoliticaDePrivacidadePage() {
                     height={56}
                     className="mx-auto mb-6"
                 />
-                <span className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[12px] font-medium text-white/80">
-                    <ShieldCheck className="h-3.5 w-3.5 text-flare" /> Proteção de dados · LGPD
+                <span className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[14px] font-medium text-white/80">
+                    <ShieldCheck className="h-4.5 w-4.5 text-flare" /> Proteção de dados · LGPD
                 </span>
                 <h1 className="text-[32px] font-bold text-paper sm:text-[42px]">Política de Privacidade</h1>
                 <p className="mx-auto mt-3 max-w-xl text-[15px] text-white/70">

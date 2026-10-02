@@ -12,13 +12,11 @@ const links = [
 
 const loginHref = "https://descobre.app.br";
 
-// Mesmo padding horizontal para header e menu mobile
 const gutter = "px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-49";
 
 export function Header() {
   const [open, setOpen] = useState(false);
 
-  // Fecha o menu ao chegar no breakpoint desktop (1024px)
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
     const onChange = (e: MediaQueryListEvent) => e.matches && setOpen(false);
@@ -26,7 +24,6 @@ export function Header() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // Fecha com Esc
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -83,11 +80,9 @@ export function Header() {
 
       <div
         id="mobile-menu"
-        // @ts-expect-error inert ainda não está tipado em todas as versões do React
-        inert={!open ? "" : undefined}
-        className={`overflow-hidden border-t border-hairline/60 bg-ink/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 lg:hidden ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
+        inert={!open ? true : undefined}
+        className={`overflow-hidden border-t border-hairline/60 bg-ink/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 lg:hidden ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <nav className={`mx-auto flex w-full flex-col gap-1 py-4 ${gutter}`}>
           {links.map((link) => (

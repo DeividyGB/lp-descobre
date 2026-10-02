@@ -128,7 +128,6 @@ export default function PoliticaDePrivacidadePage() {
 
             <div className="mx-auto max-w-6xl px-6 py-14 sm:px-10">
                 <div className="grid gap-10 lg:grid-cols-[260px_1fr] lg:gap-16">
-                    {/* Sumário lateral (sticky no desktop) */}
                     <aside className="lg:sticky lg:top-24 lg:h-fit">
                         <p className="mb-3 text-[11px] font-semibold uppercase tracking-wide text-paper-dim">
                             Sumário
@@ -153,7 +152,7 @@ export default function PoliticaDePrivacidadePage() {
                             A <strong>D ESCOBRE APP LTDA.</strong>, pessoa jurídica de direito privado, inscrita no
                             CNPJ/MF sob o nº <strong>62.562.219/0001-31</strong>, com sede na Avenida Doutor José Ozi
                             nº 450, Vila Nova Itapetininga, Itapetininga, estado de São Paulo, CEP 18203-265,
-                            endereço eletrônico <strong>contato@descobre.app</strong> (&quot;D-Escobre&quot; /
+                            endereço eletrônico <strong>contato@descobre.app.br</strong> (&quot;D-Escobre&quot; /
                             &quot;D-HUB&quot;), disponibiliza esta Política de Privacidade para demonstrar seu
                             compromisso com a proteção de dados pessoais, a privacidade e a segurança das
                             informações tratadas em sua plataforma, aplicativo móvel e serviços associados. Este
@@ -405,8 +404,8 @@ export default function PoliticaDePrivacidadePage() {
                                 </p>
                                 <p className="mb-1">
                                     <strong className="text-ink">E-mail de suporte geral:</strong>{" "}
-                                    <a href="mailto:contato@descobre.app" className="font-semibold text-flare">
-                                        contato@descobre.app
+                                    <a href="mailto:contato@descobre.app.br" className="font-semibold text-flare">
+                                        contato@descobre.app.br
                                     </a>
                                 </p>
                                 <p>
